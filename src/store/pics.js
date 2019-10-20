@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import { RESET_PAGE } from './page'
 const LOAD_PICS = 'LOAD_PICS'
@@ -8,17 +9,20 @@ const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
 const initialState = []
 
 export const getPics = () => async (dispatch, getState) => {
-  const { page } = getState()
+  const { page, tags } = getState()
 
   const { data } = await axios.get(DANBOORU_POSTS_URL, {
     params: {
       page,
+      tags: tags.join('+'),
     },
   })
 
   dispatch({
     type: LOAD_PICS,
-    data,
+    data: data
+      .filter(pic => !pic.is_banned) // banned will never show up
+      .filter(pic => pic.file_url || pic.source), // and these let us display to user
   })
 }
 
