@@ -12,7 +12,6 @@ const initialState = (function () {
   if (!qs.has('tags')) {
     return []
   }
-  console.log(qs.get('tags'))
   return qs.get('tags').split('+')
 
 })()

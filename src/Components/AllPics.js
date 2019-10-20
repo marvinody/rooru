@@ -10,7 +10,6 @@ export function AllPics(props) {
     goGetPics()
   }, [goGetPics])
 
-  console.log(props.pics)
   return (
     <div className="pics">
       {props.pics.map(pic => (
