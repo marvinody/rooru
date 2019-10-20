@@ -1,21 +1,33 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 import '../css/AllPics.css'
-import { getPics } from '../store'
+import { getPics, incPage } from '../store'
 import PicCard from './PicCard'
 
 export function AllPics(props) {
-  const { goGetPics } = props
-  useEffect(() => {
-    goGetPics()
-  }, [goGetPics])
+  // const { goGetPics } = props
+  // useEffect(() => {
+  //   goGetPics()
+  // }, [goGetPics])
+
+  const loader = <div className="loader">Loading ...</div>
 
   return (
-    <div className="pics">
-      {props.pics.map(pic => (
-        <PicCard {...pic} key={pic.id}></PicCard>
-      ))}
-    </div>
+
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={props.getNextPage}
+      hasMore={true}
+      loader={loader}>
+
+      <div className="pics" key='pics'>
+        {props.pics.map(pic => (
+          <PicCard {...pic} key={pic.id}></PicCard>
+        ))}
+      </div>
+
+    </InfiniteScroll>
   )
 }
 
@@ -24,7 +36,10 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  goGetPics: () => dispatch(getPics()),
+  getNextPage: () => {
+    dispatch(incPage())
+    dispatch(getPics())
+  },
 })
 
 
