@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "yoda": "error",
+    "semi": [
+      "error",
+      "never",
+      {
+        "beforeStatementContinuationChars": "never"
+      }
+    ],
+    "comma-dangle": [
+      "warn",
+      "always-multiline"
+    ]
+  }
+}
