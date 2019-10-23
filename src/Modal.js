@@ -11,7 +11,7 @@ export function Modal(props) {
   }
   return (
     <OutsideNotifier onOutsideClick={props.hideModal}>
-      <div className='modal show-modal'>
+      <div className='modal show-modal' onClick={props.hideModal}>
         <div className="modal-content">
           <span className="close-button" onClick={props.hideModal}>&times;</span>
           <div className='img-resize'>
