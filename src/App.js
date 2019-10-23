@@ -1,12 +1,17 @@
 import React from 'react'
 import './App.css'
 import AllPics from './Components/AllPics'
+import Modal from './Modal'
 
 function App(props) {
 
   return (
     <div className="App">
-      <AllPics />
+      <div className='mini-container'>
+        <AllPics />
+
+      </div>
+      <Modal></Modal>
     </div>
   )
 }

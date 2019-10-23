@@ -1,7 +1,22 @@
 
 import axios from 'axios'
-import { RESET_PAGE } from './page'
+import { setDoneLoading, setLoading } from './loadingPics'
+import { incPage, RESET_PAGE } from './page'
 const LOAD_PICS = 'LOAD_PICS'
+
+const fakeDataGen = () => {
+  let id = 0
+  return (n) => {
+    return Array(n).fill(0)
+      .map(i => ({
+        id: id++,
+        is_banned: false,
+        preview_file_url: "/kagami.jpg",
+        file_url: "/kagami.jpg",
+      }))
+  }
+}
+const generator = fakeDataGen()
 
 const BASE_DANBOORU_URL = 'https://danbooru.donmai.us'
 const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
@@ -9,7 +24,23 @@ const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
 const initialState = []
 
 export const getPics = () => async (dispatch, getState) => {
+  const { page: oldPage, loadingPics } = getState()
+  console.log({ oldPage, loadingPics })
+  if (loadingPics) {
+    return
+  }
+  dispatch(setLoading())
+  dispatch(incPage())
   const { page, tags } = getState()
+
+  if (window.location.hostname === 'localhost') {
+    // dispatch({
+    //   type: LOAD_PICS,
+    //   data: generator(20),
+    // })
+    // dispatch(setDoneLoading())
+    // return
+  }
 
   const { data } = await axios.get(DANBOORU_POSTS_URL, {
     params: {
@@ -26,6 +57,7 @@ export const getPics = () => async (dispatch, getState) => {
     // an empty file_url can be overcome later by checking source but not for right now
     // would need a backend and I would like to keep this client only for the time being
   })
+  dispatch(setDoneLoading())
 }
 
 
