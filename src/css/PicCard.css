@@ -1,5 +1,9 @@
 .pic-card {
   margin: 10px;
   cursor: pointer;
+  transition: transform 0.25s;
+}
 
+.pic-card:hover {
+  transform: scale(1.1);
 }

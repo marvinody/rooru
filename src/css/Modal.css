@@ -18,13 +18,21 @@
   display: flex;
   background-color: white;
   padding: 1rem 1.5rem;
-  width: 24rem;
   border-radius: 0.5rem;
+  flex-direction: column;
 }
 
+.img-resize {}
+
 .img-resize>img {
-  width: 100%;
-  height: auto;
+  object-fit: scale-down;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
 }
 
 
