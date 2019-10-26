@@ -32,9 +32,19 @@
 
 .controls {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+
 }
 
+.title {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.title-text {
+  margin-right: 10px;
+}
 
 
 .close-button {

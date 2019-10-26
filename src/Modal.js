@@ -32,12 +32,14 @@ export function Modal(props) {
         <div className="modal-content">
 
           <div className='controls'>
-            <Link className='' to={`/${id}`}>
-              <span className='title'>{title}</span>
-            </Link>
-            <a href={danbooru_url} target="_blank" rel="noopener noreferrer">
-              <FontAwesomeIcon icon={faExternalLinkAlt}></FontAwesomeIcon>
-            </a>
+            <div className='title'>
+              <Link className='title-text' to={`/${id}`}>
+                <span className='title'>{title}</span>
+              </Link>
+              <a href={danbooru_url} target="_blank" rel="noopener noreferrer">
+                <FontAwesomeIcon icon={faExternalLinkAlt}></FontAwesomeIcon>
+              </a>
+            </div>
             <span className="close-button" onClick={props.hideModal}>&times;</span>
           </div>
           <div className='img-resize'>
