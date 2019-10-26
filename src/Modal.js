@@ -1,18 +1,25 @@
 
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react"
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import './css/Modal.css'
 import OutsideNotifier from './OutsideNotifier'
 import { hideModal } from "./store"
-
 const notFoundUrl = '/404.png'
 export function Modal(props) {
   if (!props.showModal) {
     return null
   }
 
-  const { file_url, image_height: height, image_width: width } = props.pic
+  const {
+    file_url,
+    id,
+  } = props.pic
+
   const proxied_url = file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
+  const danbooru_url = `https://danbooru.donmai.us/posts/${id}`
 
   return (
     <OutsideNotifier onOutsideClick={props.hideModal}>
@@ -20,8 +27,11 @@ export function Modal(props) {
         <div className="modal-content">
 
           <div className='controls'>
-            <a className='' href='#'>
+            <Link className='' to={`/${id}`}>
               <span>Link</span>
+            </Link>
+            <a href={danbooru_url} target="_blank" rel="noopener noreferrer">
+              <FontAwesomeIcon icon={faExternalLinkAlt}></FontAwesomeIcon>
             </a>
             <span className="close-button" onClick={props.hideModal}>&times;</span>
           </div>
@@ -34,7 +44,7 @@ export function Modal(props) {
           </div>
         </div>
       </div>
-    </OutsideNotifier>
+    </OutsideNotifier >
 
   )
 }
