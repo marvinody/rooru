@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react"
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import './css/Modal.css'
-import OutsideNotifier from './OutsideNotifier'
-import { hideModal } from "./store"
+import '../css/Modal.css'
+import OutsideNotifier from '../OutsideNotifier'
+import { hideModal } from "../store"
 const notFoundUrl = '/404.jpg'
 export function Modal(props) {
   if (!props.showModal) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 import AllPics from './Components/AllPics'
-import Modal from './Modal'
+import Modal from './Components/Modal'
 
 function App(props) {
 
