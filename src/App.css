@@ -1,6 +1,13 @@
 .App {
   display: flex;
   justify-content: center;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #181d23;
+  color: #ddd
 }
 
 .mini-container {
