@@ -24,10 +24,10 @@ export function Modal(props) {
 
   const is_image = /jpe?g|png|gif/.test(file_ext)
 
-  let proxied_url = file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
+  let proxied_url = file_url.replace('https://danbooru.donmai.us/data', 'https://booru-proxy.deploy.sadpanda.moe')
   // is probably a video file
   if (file_ext === 'zip' && has_large) {
-    proxied_url = large_file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
+    proxied_url = large_file_url.replace('https://danbooru.donmai.us/data', 'https://booru-proxy.deploy.sadpanda.moe')
     console.log({ proxied_url })
   }
   const danbooru_url = `https://danbooru.donmai.us/posts/${id}`
