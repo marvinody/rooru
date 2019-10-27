@@ -26,8 +26,8 @@ export function AllPics(props) {
 
 
       <div className="pics" key='pics'>
-        {props.pics.map(pic => (
-          <PicCard {...pic} key={pic.id} showModal={props.showModal} setPicToCard={() => props.selectPic(pic)}></PicCard>
+        {props.pics.map((pic, idx) => (
+          <PicCard {...pic} key={pic.id} showModal={props.showModal} setPicToCard={() => props.selectPic(pic, idx)}></PicCard>
         ))}
       </div>
 
@@ -57,7 +57,7 @@ const mapDispatch = dispatch => ({
     leading: true,
   }),
   showModal: () => dispatch(showModal()),
-  selectPic: (pic) => dispatch(selectPic(pic)),
+  selectPic: (pic, idx) => dispatch(selectPic(pic, idx)),
 })
 
 
