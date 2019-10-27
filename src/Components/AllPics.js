@@ -5,33 +5,29 @@ import { connect } from 'react-redux'
 import '../css/AllPics.css'
 import { getPics, showModal } from '../store'
 import { selectPic } from '../store/selectedPic'
+import Loading from './Loading'
 import PicCard from './PicCard'
+
 export function AllPics(props) {
-  // const { getNextPage } = props
-  // useEffect(() => {
-  //   getNextPage()
-  // }, [getNextPage])
-
-  const loader = <div className="loader" key='loader'>Loading ...</div>
-
   return (
+    <div className='scroller'>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={props.getNextPage}
+        hasMore={props.page < 10}
+        loader={<Loading key='loading'></Loading>}
+        initialLoad={true}
+      >
 
-    <InfiniteScroll
-      pageStart={0}
-      loadMore={props.getNextPage}
-      hasMore={props.page < 10}
-      loader={loader}
-      initialLoad={true}
-    >
 
+        <div className="pics" key='pics'>
+          {props.pics.map((pic, idx) => (
+            <PicCard {...pic} key={pic.id} showModal={props.showModal} setPicToCard={() => props.selectPic(pic, idx)}></PicCard>
+          ))}
+        </div>
 
-      <div className="pics" key='pics'>
-        {props.pics.map((pic, idx) => (
-          <PicCard {...pic} key={pic.id} showModal={props.showModal} setPicToCard={() => props.selectPic(pic, idx)}></PicCard>
-        ))}
-      </div>
-
-    </InfiniteScroll>
+      </InfiniteScroll>
+    </div>
 
   )
 }

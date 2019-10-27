@@ -3,3 +3,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.scroller>div {
+  display: flex;
+  flex-direction: column;
+}
