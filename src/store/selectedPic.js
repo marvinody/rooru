@@ -14,10 +14,16 @@ export const nextPic = () => (dispatch, getState) => {
   const { selectedPic, pics } = getState()
   const { idx } = selectedPic
   const newIdx = idx + 1
+
+  if (newIdx >= pics.length) {
+    return
+  }
+
   // fetch more pics if we're near the end
   if (newIdx > pics.length - 10) {
     dispatch(getPics())
   }
+
   dispatch(selectPic(pics[newIdx], newIdx))
 
 }
