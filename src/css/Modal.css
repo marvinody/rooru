@@ -20,14 +20,19 @@
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   flex-direction: column;
+  margin: 10px;
 }
 
-.img-resize {}
+.img-resize {
+  display: flex;
+  justify-content: center;
+}
 
-.img-resize>img {
+.img-resize>img,
+.img-resize>video {
   object-fit: scale-down;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 85vw;
+  max-height: 85vh;
 }
 
 .controls {
@@ -36,7 +41,7 @@
 
 }
 
-.title {
+div.title {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -44,6 +49,11 @@
 
 .title-text {
   margin-right: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 65vw;
+  overflow: hidden;
+  max-width: 400px;
 }
 
 
