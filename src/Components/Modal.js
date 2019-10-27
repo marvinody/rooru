@@ -5,7 +5,6 @@ import React from "react"
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import '../css/Modal.css'
-import KeypressNotifier from '../KeypressNotifier'
 import OutsideNotifier from '../OutsideNotifier'
 import { hideModal, nextPic, prevPic } from "../store"
 const notFoundUrl = '/404.jpg'
@@ -35,20 +34,9 @@ export function Modal(props) {
   const title = (character ? character : 'original character')
     + (artist ? (' by ' + artist) : '')
 
-  const onKeydown = event => {
-    switch (event.code) {
-      case "ArrowLeft":
-        return props.prevPic()
-      case "ArrowRight":
-        return props.nextPic()
-      default:
-        return
-    }
-  }
-
   return (
     <OutsideNotifier onOutsideClick={props.hideModal}>
-      <KeypressNotifier onKeydown={onKeydown} />
+      {/* <NavSideBars /> */}
       <div className='modal show-modal' onClick={props.hideModal}>
         <div className="modal-content">
 
