@@ -7,20 +7,29 @@ import { Link } from 'react-router-dom'
 import './css/Modal.css'
 import OutsideNotifier from './OutsideNotifier'
 import { hideModal } from "./store"
-const notFoundUrl = '/404.png'
+const notFoundUrl = '/404.jpg'
 export function Modal(props) {
   if (!props.showModal) {
     return null
   }
-
   const {
     file_url,
+    has_large,
+    large_file_url,
+    file_ext,
     id,
     tag_string_character: character,
     tag_string_artist: artist,
   } = props.pic
 
-  const proxied_url = file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
+  const is_image = /jpe?g|png/.test(file_ext)
+
+  let proxied_url = file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
+  // is probably a video file
+  if (file_ext === 'zip' && has_large) {
+    proxied_url = large_file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
+    console.log({ proxied_url })
+  }
   const danbooru_url = `https://danbooru.donmai.us/posts/${id}`
   const title = (character ? character : 'original character')
     + (artist ? (' by ' + artist) : '')
@@ -34,7 +43,7 @@ export function Modal(props) {
           <div className='controls'>
             <div className='title'>
               <Link className='title-text' to={`/${id}`}>
-                <span className='title'>{title}</span>
+                {title}
               </Link>
               <a href={danbooru_url} target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faExternalLinkAlt}></FontAwesomeIcon>
@@ -44,10 +53,11 @@ export function Modal(props) {
           </div>
           <div className='img-resize'>
 
-            <img src={proxied_url} onError={e => {
+            {is_image && <img src={proxied_url} onError={e => {
               e.target.onerror = null
               e.target.src = notFoundUrl
-            }} />
+            }} />}
+            {!is_image && <video autoplay='autoplay' loop={true} src={proxied_url} ></video>}
           </div>
         </div>
       </div>
