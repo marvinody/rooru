@@ -12,10 +12,10 @@ Does not use a backend so it'll start right up. It connects to a proxy service I
 - click to enlarge / play video
 - external link to danbooru's original
 - load images that match a tag
+- arrow key navigation on modal
 
 
 ## Features that I would like to work
 - tag search (currently need to type manually into url)
-- arrow key navigation on modal
 - swipe navigation on modal (mobile)
 - loading animation
