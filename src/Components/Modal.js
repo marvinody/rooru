@@ -22,7 +22,7 @@ export function Modal(props) {
     tag_string_artist: artist,
   } = props.pic
 
-  const is_image = /jpe?g|png/.test(file_ext)
+  const is_image = /jpe?g|png|gif/.test(file_ext)
 
   let proxied_url = file_url.replace('https://danbooru.donmai.us/data', 'http://booru-proxy.deploy.sadpanda.moe')
   // is probably a video file
