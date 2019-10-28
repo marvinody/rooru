@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import '../css/Modal.css'
 import OutsideNotifier from '../OutsideNotifier'
-import { hideModal, nextPic, prevPic } from "../store"
+import { hideModal } from "../store"
 const notFoundUrl = '/404.jpg'
 export function Modal(props) {
   if (!props.showModal) {
@@ -18,6 +18,7 @@ export function Modal(props) {
     large_file_url,
     file_ext,
     id,
+    tag_string,
     tag_string_character: character,
     tag_string_artist: artist,
   } = props.pic
@@ -28,7 +29,6 @@ export function Modal(props) {
   // is probably a video file
   if (file_ext === 'zip' && has_large) {
     proxied_url = large_file_url.replace('https://danbooru.donmai.us/data', 'https://booru-proxy.deploy.sadpanda.moe')
-    console.log({ proxied_url })
   }
   const danbooru_url = `https://danbooru.donmai.us/posts/${id}`
   const title = (character ? character : 'original character')
@@ -52,12 +52,18 @@ export function Modal(props) {
             <span className="close-button" onClick={props.hideModal}>&times;</span>
           </div>
           <div className='img-resize'>
+            {is_image && <img src={proxied_url}
+              alt={tag_string}
+              onError={e => {
+                e.target.onerror = null
+                e.target.src = notFoundUrl
+              }}
+              onLoad={e => {
+                console.log('loaded', e)
+              }}
 
-            {is_image && <img src={proxied_url} onError={e => {
-              e.target.onerror = null
-              e.target.src = notFoundUrl
-            }} />}
-            {!is_image && <video autoplay='autoplay' loop={true} src={proxied_url} ></video>}
+            />}
+            {!is_image && <video autoPlay={true} loop={true} src={proxied_url} ></video>}
           </div>
         </div>
       </div>
@@ -73,8 +79,6 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   hideModal: () => dispatch(hideModal()),
-  nextPic: () => dispatch(nextPic()),
-  prevPic: () => dispatch(prevPic()),
 })
 
 
