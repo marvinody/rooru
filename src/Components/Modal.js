@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import '../css/Modal.css'
 import OutsideNotifier from '../OutsideNotifier'
 import { hideModal } from "../store"
+import { setDoneLoading } from '../store/loadingPic'
+import Loading from './Loading'
 const notFoundUrl = '/404.jpg'
 export function Modal(props) {
   if (!props.showModal) {
@@ -52,18 +54,28 @@ export function Modal(props) {
             <span className="close-button" onClick={props.hideModal}>&times;</span>
           </div>
           <div className='img-resize'>
+            {props.loading && <Loading></Loading>}
             {is_image && <img src={proxied_url}
               alt={tag_string}
               onError={e => {
                 e.target.onerror = null
                 e.target.src = notFoundUrl
+                props.doneLoading()
               }}
-              onLoad={e => {
-                console.log('loaded', e)
-              }}
+              // this may or may not work for everything
+              // definitely need to revisit this
+              onLoadCapture={e => props.doneLoading()}
 
             />}
-            {!is_image && <video autoPlay={true} loop={true} src={proxied_url} ></video>}
+            {!is_image && <video
+              src={proxied_url}
+              autoPlay={true}
+              loop={true}
+              onLoadedData={e => {
+                console.log('VIDEO DONE')
+                props.doneLoading()
+              }}
+            ></video>}
           </div>
         </div>
       </div>
@@ -75,10 +87,12 @@ export function Modal(props) {
 const mapState = state => ({
   showModal: state.showModal,
   pic: state.selectedPic,
+  loading: state.loadingPic,
 })
 
 const mapDispatch = dispatch => ({
   hideModal: () => dispatch(hideModal()),
+  doneLoading: () => dispatch(setDoneLoading()),
 })
 
 
