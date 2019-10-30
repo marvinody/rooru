@@ -9,6 +9,7 @@ import OutsideNotifier from '../OutsideNotifier'
 import { hideModal } from "../store"
 import { setDoneLoading } from '../store/loadingPic'
 import Loading from './Loading'
+import NavSideBars from './NavSideBars'
 const notFoundUrl = '/404.jpg'
 export function Modal(props) {
   if (!props.showModal) {
@@ -38,7 +39,7 @@ export function Modal(props) {
 
   return (
     <OutsideNotifier onOutsideClick={props.hideModal}>
-      {/* <NavSideBars /> */}
+      <NavSideBars />
       <div className='modal show-modal' onClick={props.hideModal}>
         <div className="modal-content">
 
