@@ -22,3 +22,10 @@
   color: black;
   pointer-events: all;
 }
+
+
+@media (max-width: 767px) {
+  .desktop.sidebar {
+    display: none;
+  }
+}

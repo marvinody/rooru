@@ -26,7 +26,10 @@
 .img-resize {
   display: flex;
   justify-content: center;
+  align-items: center;
+  position: relative;
 }
+
 
 .img-resize>img,
 .img-resize>video {
@@ -77,4 +80,38 @@ div.title {
   visibility: visible;
   transform: scale(1.0);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+
+.sidebar {
+
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(226, 142, 142, 0.73);
+  color: black;
+  width: 5%;
+  height: 5%;
+  font-size: 2em;
+  padding: 15px;
+}
+
+.mobile.sidebar {
+  display:none;
+}
+
+.left.sidebar {
+  left: 0;
+}
+
+.right.sidebar {
+  right: 0;
+}
+
+@media (max-width: 767px) {
+  .mobile.sidebar {
+    display:flex;
+  }
 }

@@ -1,16 +1,17 @@
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from "react"
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import '../css/Modal.css'
 import OutsideNotifier from '../OutsideNotifier'
-import { hideModal } from "../store"
+import { hideModal, nextPic, prevPic } from "../store"
 import { setDoneLoading } from '../store/loadingPic'
 import Loading from './Loading'
-import NavSideBars from './NavSideBars'
+import DesktopSideBars from './NavSideBars'
 const notFoundUrl = '/404.jpg'
+
 export function Modal(props) {
   if (!props.showModal) {
     return null
@@ -38,9 +39,9 @@ export function Modal(props) {
     + (artist ? (' by ' + artist) : '')
 
   return (
-    <OutsideNotifier onOutsideClick={props.hideModal}>
-      <NavSideBars />
-      <div className='modal show-modal' onClick={props.hideModal}>
+    <div className='modal show-modal'>
+      <OutsideNotifier onOutsideClick={props.hideModal}>
+        <DesktopSideBars />
         <div className="modal-content">
 
           <div className='controls'>
@@ -55,6 +56,9 @@ export function Modal(props) {
             <span className="close-button" onClick={props.hideModal}>&times;</span>
           </div>
           <div className='img-resize'>
+            <div class='left sidebar mobile' onClick={props.prevPic}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </div>
             {props.loading && <Loading></Loading>}
             {is_image && <img src={proxied_url}
               alt={tag_string}
@@ -77,10 +81,13 @@ export function Modal(props) {
                 props.doneLoading()
               }}
             ></video>}
+            <div className='right sidebar mobile' onClick={props.nextPic}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </div>
           </div>
         </div>
-      </div>
-    </OutsideNotifier >
+      </OutsideNotifier >
+    </div>
 
   )
 }
@@ -94,6 +101,8 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   hideModal: () => dispatch(hideModal()),
   doneLoading: () => dispatch(setDoneLoading()),
+  nextPic: () => dispatch(nextPic()),
+  prevPic: () => dispatch(prevPic()),
 })
 
 
