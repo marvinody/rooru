@@ -13,6 +13,7 @@ Does not use a backend so it'll start right up. It connects to a proxy service I
 - external link to danbooru's original
 - load images that match a tag
 - arrow key navigation on modal
+- allow ESCAPE to close modal
 - loading animation
 
 
@@ -26,5 +27,3 @@ Does not use a backend so it'll start right up. It connects to a proxy service I
 - fix styling on modal
   - X color
   - alignment of title
-- fix clicking on image (should not hide)
-- allow ESCAPE to close modal
