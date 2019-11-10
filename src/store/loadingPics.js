@@ -1,3 +1,4 @@
+import { RESET_PAGE } from './page'
 const SET_LOADING = 'SET_LOADING'
 const SET_DONE_LOADING = 'SET_DONE_LOADING'
 
@@ -15,6 +16,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_LOADING:
       return true
+    case RESET_PAGE:
     case SET_DONE_LOADING:
       return false
     default:
