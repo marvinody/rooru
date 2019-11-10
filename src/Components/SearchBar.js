@@ -28,7 +28,7 @@ const tagSearch = _.debounce(async (text) => {
 })
 
 const SearchBar = function SearchBar(props) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(props.tags)
   return (
     <div>
       <Autocomplete
