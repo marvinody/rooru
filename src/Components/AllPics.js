@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React from 'react'
+import React, { useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 import '../css/AllPics.css'
@@ -9,6 +9,9 @@ import Loading from './Loading'
 import PicCard from './PicCard'
 
 export function AllPics(props) {
+  useEffect(() => {
+    props.getNextPage()
+  }, [props.getNextPage])
   return (
     <div className='scroller'>
       <InfiniteScroll
@@ -16,7 +19,7 @@ export function AllPics(props) {
         loadMore={props.getNextPage}
         hasMore={props.hasMore}
         loader={<Loading key='loading'></Loading>}
-        initialLoad={true}
+        initialLoad={false}
       >
 
 
@@ -51,7 +54,8 @@ const mapDispatch = dispatch => ({
   getNextPage: _.debounce((page) => {
     dispatch(getPics())
   }, 250, {
-    leading: true,
+    leading: false,
+    trailing: true,
   }),
   showModal: () => dispatch(showModal()),
   selectPic: (pic, idx) => dispatch(selectPic(pic, idx)),
