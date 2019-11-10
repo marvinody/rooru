@@ -3,6 +3,7 @@ import './App.css'
 import AllPics from './Components/AllPics'
 import KeyBindings from './Components/KeyBindings'
 import Modal from './Components/Modal'
+import SearchBar from './Components/SearchBar'
 
 function App(props) {
 
@@ -11,6 +12,7 @@ function App(props) {
       <KeyBindings />
 
       <div className='mini-container'>
+        <SearchBar></SearchBar>
         <AllPics />
 
       </div>
