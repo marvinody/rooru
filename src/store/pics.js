@@ -5,19 +5,19 @@ import { setDoneLoading, setLoading } from './loadingPics'
 import { incPage, RESET_PAGE } from './page'
 const LOAD_PICS = 'LOAD_PICS'
 
-const fakeDataGen = () => {
-  let id = 0
-  return (n) => {
-    return Array(n).fill(0)
-      .map(i => ({
-        id: id++,
-        is_banned: false,
-        preview_file_url: "/kagami.jpg",
-        file_url: "/kagami.jpg",
-      }))
-  }
-}
-const generator = fakeDataGen()
+// const fakeDataGen = () => {
+//   let id = 0
+//   return (n) => {
+//     return Array(n).fill(0)
+//       .map(i => ({
+//         id: id++,
+//         is_banned: false,
+//         preview_file_url: "/kagami.jpg",
+//         file_url: "/kagami.jpg",
+//       }))
+//   }
+// }
+// const generator = fakeDataGen()
 
 const BASE_DANBOORU_URL = 'https://danbooru.donmai.us'
 const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
@@ -25,8 +25,7 @@ const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
 const initialState = []
 
 export const getPics = () => async (dispatch, getState) => {
-  const { page: oldPage, loadingPics, hasPics } = getState()
-  console.log({ oldPage, loadingPics })
+  const { loadingPics, hasPics } = getState()
 
   if (loadingPics) {
     return
