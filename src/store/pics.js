@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import { setHasNoMorePics } from './hasPics'
 import { setDoneLoading, setLoading } from './loadingPics'
 import { incPage, RESET_PAGE } from './page'
 const LOAD_PICS = 'LOAD_PICS'
@@ -24,11 +25,17 @@ const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
 const initialState = []
 
 export const getPics = () => async (dispatch, getState) => {
-  const { page: oldPage, loadingPics } = getState()
+  const { page: oldPage, loadingPics, hasPics } = getState()
   console.log({ oldPage, loadingPics })
+
   if (loadingPics) {
     return
   }
+
+  if (!hasPics) {
+    return
+  }
+
   dispatch(setLoading())
   dispatch(incPage())
   const { page, tags } = getState()
@@ -49,13 +56,20 @@ export const getPics = () => async (dispatch, getState) => {
     },
   })
 
+  const viewable_pics = data
+    .filter(pic => !pic.is_banned) // banned will never show up
+    .filter(pic => pic.file_url) // and this lets us display to user
+  // an empty file_url can be overcome later by checking source but not for right now
+  // would need a backend and I would like to keep this client only for the time being
+
+  if (viewable_pics.length === 0) {
+    dispatch(setHasNoMorePics())
+    return
+  }
+
   dispatch({
     type: LOAD_PICS,
-    data: data
-      .filter(pic => !pic.is_banned) // banned will never show up
-      .filter(pic => pic.file_url), // and this lets us display to user
-    // an empty file_url can be overcome later by checking source but not for right now
-    // would need a backend and I would like to keep this client only for the time being
+    data: viewable_pics,
   })
   dispatch(setDoneLoading())
 }

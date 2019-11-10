@@ -14,7 +14,7 @@ export function AllPics(props) {
       <InfiniteScroll
         pageStart={0}
         loadMore={props.getNextPage}
-        hasMore={props.page < 10}
+        hasMore={props.hasMore}
         loader={<Loading key='loading'></Loading>}
         initialLoad={true}
       >
@@ -36,6 +36,7 @@ const mapState = state => ({
   pics: state.pics,
   page: state.page,
   loadingPics: state.loadingPics,
+  hasMore: state.hasPics,
 })
 
 const mapDispatch = dispatch => ({
