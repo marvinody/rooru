@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import qs from 'qs'
 import { setHasNoMorePics } from './hasPics'
 import { setDoneLoading, setLoading } from './loadingPics'
 import { incPage, RESET_PAGE } from './page'
@@ -47,11 +48,14 @@ export const getPics = () => async (dispatch, getState) => {
     // dispatch(setDoneLoading())
     // return
   }
-
+  const formedTags = tags.map(tag => tag.replace(' ', '_'))
   const { data } = await axios.get(DANBOORU_POSTS_URL, {
     params: {
       page,
-      tags: tags.join('+'),
+      tags: formedTags.join('+'),
+    },
+    paramsSerializer: function (params) {
+      return qs.stringify(params, { encode: false })
     },
   })
 
