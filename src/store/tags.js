@@ -14,7 +14,6 @@ const initialState = (function () {
     return []
   }
   const tags = qs.get('tags')
-  console.log({ tags, qs })
   return tags.split(' ')
 
 })()

@@ -77,7 +77,6 @@ export function Modal(props) {
               autoPlay={true}
               loop={true}
               onLoadedData={e => {
-                console.log('VIDEO DONE')
                 props.doneLoading()
               }}
             ></video>}
