@@ -35,7 +35,7 @@ export const prevPic = () => (dispatch, getState) => {
   const { idx } = selectedPic
   const newIdx = idx - 1
   // fetch more pics if we're near the end
-  if (newIdx <= 0) {
+  if (newIdx < 0) {
     return
   }
   dispatch(selectPic(pics[newIdx], newIdx))
