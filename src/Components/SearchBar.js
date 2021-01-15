@@ -16,7 +16,7 @@ const tagSearch = _.debounce(async (text) => {
       return
     }
 
-    const { data } = await axios.get(`https://danbooru.donmai.us/tags/autocomplete.json?search[name_matches]=${searchText}`)
+    const { data } = await axios.get(`https://danbooru.donmai.us/autocomplete.json?search[name_matches]=${searchText}`)
     tags = data
   } catch (err) {
     console.error(err)
