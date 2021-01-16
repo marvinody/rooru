@@ -61,7 +61,6 @@ const SearchBar = function SearchBar(props) {
         onSuggestionsClearRequested={() => {
           tags = []
         }}
-        alwaysRenderSuggestions={true}
         onSuggestionSelected={onSelect}
         inputProps={inputProps}
         getSuggestionValue={(tagObj) => {
