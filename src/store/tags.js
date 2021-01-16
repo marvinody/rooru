@@ -2,7 +2,6 @@ import history from '../history'
 import { resetPage, RESET_PAGE } from './page'
 import { getPics } from './pics'
 const SET_TAGS = 'SET_TAGS'
-const REMOVE_TAG = 'REMOVE_TAG'
 
 // take a look at the url and parse any existing tags out for initial state
 // this should be syncronized later
@@ -30,14 +29,12 @@ const changeTags = tags => ({
   tags,
 })
 
-const remTag = tag => ({
-  type: REMOVE_TAG,
-  tag,
-})
 
-export const removeTag = (tag) => dispatch => {
+export const removeTag = (tag) => (dispatch, getState) => {
+  const tags = getState().tags
+  const newTags = tags.filter(t => t !== tag)
   dispatch(resetPage())
-  dispatch(remTag(tag))
+  dispatch(setTags(newTags))
   dispatch(getPics())
 }
 
@@ -54,8 +51,6 @@ export default (state = initialState, action) => {
       return []
     case SET_TAGS:
       return action.tags
-    case REMOVE_TAG:
-      return state.filter(t => action.tag !== t)
     default:
       return state
   }
