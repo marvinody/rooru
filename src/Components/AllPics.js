@@ -9,9 +9,10 @@ import Loading from './Loading'
 import PicCard from './PicCard'
 
 export function AllPics(props) {
+  const { getNextPage } = props
   useEffect(() => {
-    props.getNextPage()
-  }, [props.getNextPage])
+    getNextPage()
+  }, [getNextPage])
   return (
     <div className='scroller'>
       <InfiniteScroll

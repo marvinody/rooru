@@ -10,7 +10,7 @@
     "lodash": "^4.17.15",
     "qs": "^6.9.1",
     "react": "^16.8.6",
-    "react-autocomplete": "^1.8.1",
+    "react-autosuggest": "^10.1.0",
     "react-dom": "^16.8.6",
     "react-infinite-scroller": "^1.2.4",
     "react-redux": "^7.1.0",

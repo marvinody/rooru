@@ -75,6 +75,7 @@ export function Modal(props) {
             {props.loading && <Loading></Loading>}
             {is_image && (
               <img
+                className={props.loading ? 'loading' : ''}
                 src={proxied_url}
                 alt={tag_string}
                 onError={e => {
@@ -84,11 +85,12 @@ export function Modal(props) {
                 }}
                 // this may or may not work for everything
                 // definitely need to revisit this
-                onLoadCapture={e => props.doneLoading()}
+                onLoad={e => props.doneLoading()}
               />
             )}
             {!is_image && (
               <video
+                className={props.loading ? 'loading' : ''}
                 src={proxied_url}
                 autoPlay={true}
                 loop={true}
