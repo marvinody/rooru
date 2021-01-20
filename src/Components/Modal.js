@@ -29,6 +29,9 @@ export function Modal(props) {
     tag_string_character: character,
     tag_string_artist: artist,
     idx,
+    preview_file_url,
+    image_height,
+    image_width,
   } = props.pic
 
   const is_image = /jpe?g|png|gif/.test(file_ext)
@@ -72,10 +75,22 @@ export function Modal(props) {
             <div class="left sidebar mobile" onClick={props.prevPic}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </div>
-            {props.loading && <Loading></Loading>}
+
+            {props.loading && <Loading
+              size={256}
+              className='loading-on-top'
+              highContrast={true}
+            />}
+            {props.loading && <img
+              className={!props.loading ? 'hidden' : 'preview'} width={image_width}
+              alt={tag_string}
+              height={image_height}
+              src={preview_file_url}
+            />}
+
             {is_image && (
               <img
-                className={props.loading ? 'loading' : ''}
+                className={props.loading ? 'hidden' : ''}
                 src={proxied_url}
                 alt={tag_string}
                 onError={e => {
@@ -90,7 +105,7 @@ export function Modal(props) {
             )}
             {!is_image && (
               <video
-                className={props.loading ? 'loading' : ''}
+                className={props.loading ? 'hidden' : ''}
                 src={proxied_url}
                 autoPlay={true}
                 loop={true}
@@ -105,7 +120,7 @@ export function Modal(props) {
           </div>
         </div>
       </OutsideNotifier>
-    </div>
+    </div >
   )
 }
 
