@@ -3,8 +3,7 @@ import { resetPage, RESET_PAGE } from './page'
 import { getPics } from './pics'
 const SET_TAGS = 'SET_TAGS'
 
-// take a look at the url and parse any existing tags out for initial state
-// this should be syncronized later
+
 const initialState = (function () {
   if (!history.location.search) {
     return []

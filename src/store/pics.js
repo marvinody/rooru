@@ -15,6 +15,7 @@ const LOAD_PICS = 'LOAD_PICS'
 //         is_banned: false,
 //         preview_file_url: "/kagami.jpg",
 //         file_url: "/kagami.jpg",
+//         file_ext: 'jpg'
 //       }))
 //   }
 // }
@@ -40,14 +41,14 @@ export const getPics = () => async (dispatch, getState) => {
   dispatch(incPage())
   const { page, tags } = getState()
 
-  if (window.location.hostname === 'localhost') {
-    // dispatch({
-    //   type: LOAD_PICS,
-    //   data: generator(20),
-    // })
-    // dispatch(setDoneLoading())
-    // return
-  }
+  // if (window.location.hostname === 'localhost') {
+  //   dispatch({
+  //     type: LOAD_PICS,
+  //     data: generator(20),
+  //   })
+  //   dispatch(setDoneLoading())
+  //   return
+  // }
   const formedTags = tags.map(tag => tag.replace(' ', '_'))
   const { data } = await axios.get(DANBOORU_POSTS_URL, {
     params: {

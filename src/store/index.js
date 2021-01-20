@@ -10,6 +10,7 @@ import pics from './pics'
 import selectedPic from './selectedPic'
 import showModal from './showModal'
 import tags from './tags'
+import searchTags from './searchTags'
 export * from './hasPics'
 export * from './loadingPic'
 export * from './loadingPics'
@@ -18,6 +19,7 @@ export * from './pics'
 export * from './selectedPic'
 export * from './showModal'
 export * from './tags'
+export * from './searchTags'
 
 const reducer = combineReducers({
   pics,
@@ -28,6 +30,7 @@ const reducer = combineReducers({
   showModal,
   selectedPic,
   hasPics,
+  searchTags,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
