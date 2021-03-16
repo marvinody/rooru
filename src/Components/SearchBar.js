@@ -3,7 +3,8 @@ import '../css/SearchBar.css'
 import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
-import { setTags, removeTag, searchTags } from '../store'
+import { setTags, removeTag, searchTags, setShowNSFW, setHideNSFW } from '../store'
+import Switch from 'react-ios-switch';
 
 const SearchBar = function SearchBar(props) {
   const [input, setInput] = useState("")
@@ -46,6 +47,14 @@ const SearchBar = function SearchBar(props) {
       <div className='tags-bar'>
         {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
       </div>
+
+      <div className='nsfw-toggle'>
+        <span>Show NSFW:</span>
+        <Switch
+          checked={props.showNSFW}
+          onChange={props.setShowNSFWW}
+        />
+      </div>
     </div>
   )
 }
@@ -57,13 +66,21 @@ const mapState = state => ({
   loadingPics: state.loadingPics,
   searchedTags: state.searchTags,
   hasMore: state.hasPics,
+  showNSFW: state.showNSFW
 })
 
 const mapDispatch = dispatch => ({
   setTags: tags => dispatch(setTags(tags)),
   unsetTag: tag => dispatch(removeTag(tag)),
   searchTags: value => dispatch(searchTags(value)),
-  resetSearchTags: () => dispatch(searchTags([]))
+  resetSearchTags: () => dispatch(searchTags([])),
+  setShowNSFWW: (flag) => {
+    if (flag) {
+      dispatch(setShowNSFW())
+    } else {
+      dispatch(setHideNSFW())
+    }
+  }
 })
 
 

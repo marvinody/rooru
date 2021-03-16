@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 }
 
 .modal-content {
@@ -126,4 +127,9 @@ div.title {
   .mobile.sidebar {
     display: flex;
   }
+}
+
+
+.hide-nsfw .img-resize.rating-explicit, .hide-nsfw .img-resize.rating-questionable {
+  filter: blur(50px);
 }

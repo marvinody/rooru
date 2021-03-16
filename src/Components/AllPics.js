@@ -13,8 +13,12 @@ export function AllPics(props) {
   useEffect(() => {
     getNextPage()
   }, [getNextPage])
+  const classes = [
+    'scroller',
+    props.showNSFW ? 'show-nsfw' : 'hide-nsfw',
+  ]
   return (
-    <div className='scroller'>
+    <div className={classes.join(' ')}>
       <InfiniteScroll
         pageStart={0}
         loadMore={props.getNextPage}
@@ -41,6 +45,7 @@ const mapState = state => ({
   page: state.page,
   loadingPics: state.loadingPics,
   hasMore: state.hasPics,
+  showNSFW: state.showNSFW,
 })
 
 const mapDispatch = dispatch => ({

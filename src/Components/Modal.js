@@ -15,6 +15,12 @@ import Loading from "./Loading"
 import DesktopSideBars from "./NavSideBars"
 const notFoundUrl = "/404.jpg"
 
+const RATING_TO_CLASS = {
+  's': 'rating-safe',
+  'q': 'rating-questionable',
+  'e': 'rating-explicit',
+}
+
 export function Modal(props) {
   if (!props.showModal) {
     return null
@@ -32,6 +38,7 @@ export function Modal(props) {
     preview_file_url,
     image_height,
     image_width,
+    rating,
   } = props.pic
 
   const is_image = /jpe?g|png|gif/.test(file_ext)
@@ -53,8 +60,19 @@ export function Modal(props) {
     (character ? character : "original character") +
     (artist ? " by " + artist : "")
 
+    const modalClasses = [
+      "modal",
+      "show-modal",
+      props.showNSFW ? 'show-nsfw' : 'hide-nsfw',
+    ]
+
+    const imgContainerClasses = [
+      "img-resize",
+      RATING_TO_CLASS[rating],
+    ]
+
   return (
-    <div className="modal show-modal">
+    <div className={modalClasses.join(' ')}>
       <OutsideNotifier onOutsideClick={props.hideModal}>
         <DesktopSideBars />
         <div className="modal-content">
@@ -71,7 +89,7 @@ export function Modal(props) {
               &times;
             </span>
           </div>
-          <div className="img-resize">
+          <div className={imgContainerClasses.join(' ')}>
             <div class="left sidebar mobile" onClick={props.prevPic}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </div>
@@ -128,6 +146,7 @@ const mapState = state => ({
   showModal: state.showModal,
   pic: state.selectedPic,
   loading: state.loadingPic,
+  showNSFW: state.showNSFW,
 })
 
 const mapDispatch = dispatch => ({
