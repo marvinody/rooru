@@ -29,23 +29,31 @@ const SearchBar = function SearchBar(props) {
   }
 
   return (
-    <div className='search-bar'>
-      <Autosuggest
-        suggestions={props.searchedTags}
-        onSuggestionsFetchRequested={onFetch}
-        onSuggestionsClearRequested={props.resetSearchTags}
-        onSuggestionSelected={onSelect}
-        inputProps={inputProps}
-        getSuggestionValue={(tagObj) => {
-          return tagObj.value
-        }}
-        containerProps={{
-          className: "search-container"
-        }}
-        renderSuggestion={tagObj => (<div>{tagObj.label}</div>)}
-      />
-      <div className='tags-bar'>
-        {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
+    <div className='top-bar'>
+
+      <div className='search-bar'>
+        <Autosuggest
+          suggestions={props.searchedTags}
+          onSuggestionsFetchRequested={onFetch}
+          onSuggestionsClearRequested={props.resetSearchTags}
+          onSuggestionSelected={onSelect}
+          inputProps={inputProps}
+          getSuggestionValue={(tagObj) => {
+            return tagObj.value
+          }}
+          containerProps={{
+            className: "search-container"
+          }}
+          renderSuggestion={tagObj => {
+            if(tagObj.type === 'tag-alias') {
+              return (<div>{tagObj.antecedent} -&gt; {tagObj.label}</div>)
+            }
+            return (<div>{tagObj.label}</div>)
+          }}
+        />
+        <div className='tags-bar'>
+          {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
+        </div>
       </div>
 
       <div className='nsfw-toggle'>
@@ -56,6 +64,7 @@ const SearchBar = function SearchBar(props) {
         />
       </div>
     </div>
+
   )
 }
 
