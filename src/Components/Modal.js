@@ -110,6 +110,7 @@ export function Modal(props) {
               <img
                 className={props.loading ? 'hidden' : ''}
                 src={proxied_url}
+                title={tag_string}
                 alt={tag_string}
                 onError={e => {
                   e.target.onerror = null
@@ -135,6 +136,9 @@ export function Modal(props) {
             <div className="right sidebar mobile" onClick={props.nextPic}>
               <FontAwesomeIcon icon={faChevronRight} />
             </div>
+          </div>
+          <div className="tag-list">
+            {props.pic.tag_string_general.split(' ').map(tag => <p key={tag}>{tag.split('_').join(' ')}</p>)}
           </div>
         </div>
       </OutsideNotifier>

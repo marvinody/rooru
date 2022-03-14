@@ -24,7 +24,7 @@ export function AllPics(props) {
         loadMore={props.getNextPage}
         hasMore={props.hasMore}
         loader={<Loading key='loading'></Loading>}
-        initialLoad={false}
+        initialLoad={true}
       >
 
 
