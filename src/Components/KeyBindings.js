@@ -9,7 +9,12 @@ const KeyBindings = (props) => {
   useKeypress(event => {
     switch (event.code) {
       case "Escape":
-        return props.showModal && props.hideModal()
+        if(props.showModal) {
+          event.preventDefault();
+          return props.showModal && props.hideModal()
+        } else {
+          return; // do nothing if hidden modal
+        }
       case "ArrowLeft":
         return props.showModal && props.prevPic()
       case "ArrowRight":
