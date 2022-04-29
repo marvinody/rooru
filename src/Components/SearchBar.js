@@ -45,23 +45,31 @@ const SearchBar = function SearchBar(props) {
             className: "search-container"
           }}
           renderSuggestion={tagObj => {
-            if(tagObj.type === 'tag-alias') {
+            if (tagObj.type === 'tag-alias') {
               return (<div>{tagObj.antecedent} -&gt; {tagObj.label}</div>)
             }
             return (<div>{tagObj.label}</div>)
           }}
         />
-        <div className='tags-bar'>
-          {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
+
+        <div className='rating-controller'>
+          <div className='rating-control'>Safe</div>
+          <div className='rating-control disabled'>Questionable</div>
+          <div className='rating-control disabled'>Explicit</div>
         </div>
       </div>
 
-      <div className='nsfw-toggle'>
+      {/* <div className='nsfw-toggle'>
         <span>Show NSFW:</span>
         <Switch
           checked={props.showNSFW}
           onChange={props.setShowNSFWW}
         />
+      </div> */}
+
+
+      <div className='tags-bar'>
+        {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
       </div>
     </div>
 
