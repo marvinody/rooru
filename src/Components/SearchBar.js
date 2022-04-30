@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
 import { setTags, removeTag, searchTags, toggleSafe, toggleQuestionable, toggleExplicit } from '../store'
-import Switch from 'react-ios-switch';
 
 const SearchBar = function SearchBar(props) {
   const [input, setInput] = useState("")
