@@ -23,9 +23,9 @@ const LOAD_PICS = 'LOAD_PICS'
 
 const getRatingTag = (ratings) => {
   const ratingBitmask =
-    ratings.safe |
-    ratings.questionable << 1 |
-    ratings.explicit << 2
+    (ratings.safe) |
+    (ratings.questionable << 1) |
+    (ratings.explicit << 2)
 
   switch (ratingBitmask) {
     case 0b001:
@@ -76,8 +76,8 @@ export const getPics = () => async (dispatch, getState) => {
   const formedTags = tags.map(tag => tag.replace(' ', '_'))
 
   const ratingTag = getRatingTag(ratingFilters);
-  console.log({ratingTag})
-  if(ratingTag) {
+
+  if (ratingTag) {
     formedTags.push(ratingTag)
   }
 

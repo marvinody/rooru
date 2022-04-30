@@ -1,5 +1,5 @@
 import history from '../history'
-import { resetPage, RESET_PAGE } from './page'
+import { resetPage } from './page'
 import { getPics } from './pics'
 const SET_TAGS = 'SET_TAGS'
 
