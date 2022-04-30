@@ -3,7 +3,7 @@ import '../css/SearchBar.css'
 import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
-import { setTags, removeTag, searchTags, setShowNSFW, setHideNSFW } from '../store'
+import { setTags, removeTag, searchTags, toggleSafe, toggleQuestionable, toggleExplicit } from '../store'
 import Switch from 'react-ios-switch';
 
 const SearchBar = function SearchBar(props) {
@@ -27,6 +27,21 @@ const SearchBar = function SearchBar(props) {
   const onFetch = ({ value }) => {
     props.searchTags(value)
   }
+
+  const ratingOptions = [
+    {
+      key: 'safe',
+      toggle: props.toggleSafe,
+    },
+    {
+      key: 'questionable',
+      toggle: props.toggleQuestionable,
+    },
+    {
+      key: 'explicit',
+      toggle: props.toggleExplicit,
+    },
+  ]
 
   return (
     <div className='top-bar'>
@@ -53,20 +68,17 @@ const SearchBar = function SearchBar(props) {
         />
 
         <div className='rating-controller'>
-          <div className='rating-control'>Safe</div>
-          <div className='rating-control disabled'>Questionable</div>
-          <div className='rating-control disabled'>Explicit</div>
+          {
+            ratingOptions.map(({key, toggle}) => {
+              const displayValue = key.toUpperCase();
+              const value = props.ratingFilters[key];
+              const className = 'rating-control ' + (value ? '' : 'disabled');
+
+              return <div className={className} onClick={toggle}>{displayValue}</div>
+            })
+          }
         </div>
       </div>
-
-      {/* <div className='nsfw-toggle'>
-        <span>Show NSFW:</span>
-        <Switch
-          checked={props.showNSFW}
-          onChange={props.setShowNSFWW}
-        />
-      </div> */}
-
 
       <div className='tags-bar'>
         {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
@@ -83,7 +95,7 @@ const mapState = state => ({
   loadingPics: state.loadingPics,
   searchedTags: state.searchTags,
   hasMore: state.hasPics,
-  showNSFW: state.showNSFW
+  ratingFilters: state.ratingFilters
 })
 
 const mapDispatch = dispatch => ({
@@ -91,13 +103,9 @@ const mapDispatch = dispatch => ({
   unsetTag: tag => dispatch(removeTag(tag)),
   searchTags: value => dispatch(searchTags(value)),
   resetSearchTags: () => dispatch(searchTags([])),
-  setShowNSFWW: (flag) => {
-    if (flag) {
-      dispatch(setShowNSFW())
-    } else {
-      dispatch(setHideNSFW())
-    }
-  }
+  toggleSafe: () => dispatch(toggleSafe()),
+  toggleQuestionable: () => dispatch(toggleQuestionable()),
+  toggleExplicit: () => dispatch(toggleExplicit()),
 })
 
 

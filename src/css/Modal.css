@@ -131,11 +131,6 @@ div.title {
   }
 }
 
-
-.hide-nsfw .img-resize.rating-explicit, .hide-nsfw .img-resize.rating-questionable {
-  filter: blur(50px);
-}
-
 .tag-list {
   display:flex;
   flex-wrap: wrap;

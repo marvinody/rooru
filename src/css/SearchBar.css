@@ -130,15 +130,6 @@
   color: #777;
 }
 
-.nsfw-toggle {
-  display: flex;
-  align-items: center;
-}
-
-.nsfw-toggle span {
-  margin-right: 5px;
-}
-
 .rating-controller {
   display: flex;
   border: 2px solid black;
@@ -147,7 +138,6 @@
   margin-top: 4px;
 }
 
-
 .rating-control {
   background-color: #F0BCE1;
   padding: 4px;
@@ -155,7 +145,6 @@
   cursor: pointer;
   height: fit-content;
 }
-
 
 .rating-control:not(:last-child) {
   border-right: 2px solid black;
