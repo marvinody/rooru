@@ -61,7 +61,7 @@
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   font-size: 16px;
-  border: 1px solid #aaa;
+  border: 2px solid black;
   border-radius: 4px;
   -webkit-appearance: none;
 }
@@ -81,6 +81,8 @@
 
 .react-autosuggest__suggestions-container {
   display: none;
+  border: 2px solid black !important;
+  border-top: none !important;
 }
 
 .react-autosuggest__suggestions-container--open {
