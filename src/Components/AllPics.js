@@ -15,7 +15,6 @@ export function AllPics(props) {
   }, [getNextPage])
   const classes = [
     'scroller',
-    props.showNSFW ? 'show-nsfw' : 'hide-nsfw',
   ]
   return (
     <div className={classes.join(' ')}>
@@ -45,7 +44,6 @@ const mapState = state => ({
   page: state.page,
   loadingPics: state.loadingPics,
   hasMore: state.hasPics,
-  showNSFW: state.showNSFW,
 })
 
 const mapDispatch = dispatch => ({

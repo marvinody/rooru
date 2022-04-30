@@ -13,7 +13,7 @@ const initialState = (function () {
     return []
   }
   const tags = qs.get('tags')
-  return tags.split('+')
+  return tags.split('+').filter(t => t.length > 0)
 
 })()
 
@@ -46,8 +46,6 @@ export const setTags = (tags) => dispatch => {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case RESET_PAGE:
-      return []
     case SET_TAGS:
       return action.tags
     default:

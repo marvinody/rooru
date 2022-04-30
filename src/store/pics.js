@@ -21,10 +21,34 @@ const LOAD_PICS = 'LOAD_PICS'
 // }
 // const generator = fakeDataGen()
 
+const getRatingTag = (ratings) => {
+  const ratingBitmask =
+    ratings.safe |
+    ratings.questionable << 1 |
+    ratings.explicit << 2
+
+  switch (ratingBitmask) {
+    case 0b001:
+      return 'rating:safe';
+    case 0b010:
+      return 'rating:questionable';
+    case 0b100:
+      return 'rating:explicit';
+    case 0b110:
+      return '-rating:safe';
+    case 0b101:
+      return '-rating:questionable';
+    case 0b011:
+      return '-rating:explicit';
+    default:
+      return null;
+  }
+}
+
 const BASE_DANBOORU_URL = 'https://danbooru.donmai.us'
 const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
 
-const initialState = []
+const initialState = [];
 
 export const getPics = () => async (dispatch, getState) => {
   const { loadingPics, hasPics } = getState()
@@ -39,7 +63,7 @@ export const getPics = () => async (dispatch, getState) => {
 
   dispatch(setLoading())
   dispatch(incPage())
-  const { page, tags } = getState()
+  const { page, tags, ratingFilters } = getState()
 
   // if (window.location.hostname === 'localhost') {
   //   dispatch({
@@ -50,6 +74,13 @@ export const getPics = () => async (dispatch, getState) => {
   //   return
   // }
   const formedTags = tags.map(tag => tag.replace(' ', '_'))
+
+  const ratingTag = getRatingTag(ratingFilters);
+  console.log({ratingTag})
+  if(ratingTag) {
+    formedTags.push(ratingTag)
+  }
+
   const { data } = await axios.get(DANBOORU_POSTS_URL, {
     params: {
       page,

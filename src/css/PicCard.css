@@ -1,13 +1,15 @@
 .pic-card {
-  margin: 10px;
+  /* margin: 10px; */
+  margin-top: 4px;
   cursor: pointer;
   transition: transform 0.25s;
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pic-card:hover {
   transform: scale(1.1);
-}
-
-.hide-nsfw .pic-card.rating-explicit, .hide-nsfw .pic-card.rating-questionable {
-  filter: blur(10px);
 }

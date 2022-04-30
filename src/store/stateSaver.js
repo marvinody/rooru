@@ -23,7 +23,7 @@ const stateSaver = ({
   middlewares.push(reduxMiddleware)
 
   const previouslySavedValue = deserialize(localStorage.getItem(key))
-  if (previouslySavedValue === undefined) {
+  if (previouslySavedValue === null) {
     return initialState
   }
   return previouslySavedValue

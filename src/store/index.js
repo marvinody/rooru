@@ -10,7 +10,7 @@ import pics from './pics'
 import selectedPic from './selectedPic'
 import showModal from './showModal'
 import tags from './tags'
-import showNSFW from './showNSFW'
+import ratingFilters from './ratingFilters'
 import searchTags from './searchTags'
 import { middlewares } from './stateSaver'
 
@@ -22,7 +22,7 @@ export * from './pics'
 export * from './selectedPic'
 export * from './showModal'
 export * from './tags'
-export * from './showNSFW'
+export * from './ratingFilters'
 export * from './searchTags'
 
 
@@ -36,7 +36,7 @@ const reducer = combineReducers({
   selectedPic,
   hasPics,
   searchTags,
-  showNSFW,
+  ratingFilters,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(

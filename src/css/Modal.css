@@ -16,8 +16,8 @@
 
 .modal-content {
   display: flex;
-  background-color: white;
-  color: grey;
+  background-color: #36A0C9;
+  color: black;
   padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   flex-direction: column;
@@ -131,11 +131,6 @@ div.title {
   }
 }
 
-
-.hide-nsfw .img-resize.rating-explicit, .hide-nsfw .img-resize.rating-questionable {
-  filter: blur(50px);
-}
-
 .tag-list {
   display:flex;
   flex-wrap: wrap;
@@ -146,6 +141,9 @@ div.title {
 }
 
 .tag-list p {
+  /* background-color: #9BC0CF; */
+  background-color: #F0BCE1;
+  color: black;
   padding:4px;
   border: 1px solid black;
   border-radius: 4px;

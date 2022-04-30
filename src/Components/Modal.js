@@ -63,7 +63,6 @@ export function Modal(props) {
     const modalClasses = [
       "modal",
       "show-modal",
-      props.showNSFW ? 'show-nsfw' : 'hide-nsfw',
     ]
 
     const imgContainerClasses = [
@@ -150,7 +149,6 @@ const mapState = state => ({
   showModal: state.showModal,
   pic: state.selectedPic,
   loading: state.loadingPic,
-  showNSFW: state.showNSFW,
 })
 
 const mapDispatch = dispatch => ({
