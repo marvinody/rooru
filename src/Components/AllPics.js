@@ -57,7 +57,7 @@ const mapDispatch = dispatch => ({
   // },
   getNextPage: _.debounce((page) => {
     dispatch(getPics())
-  }, 250, {
+  }, 150, {
     leading: false,
     trailing: true,
   }),
