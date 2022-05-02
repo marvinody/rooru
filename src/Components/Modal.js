@@ -35,7 +35,6 @@ export function Modal(props) {
     tag_string_character: character,
     tag_string_general: generalTags,
     tag_string_artist: artist,
-    idx,
     preview_file_url,
     image_height,
     image_width,
