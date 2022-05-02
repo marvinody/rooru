@@ -33,6 +33,7 @@ export function Modal(props) {
     id,
     tag_string,
     tag_string_character: character,
+    tag_string_general: generalTags,
     tag_string_artist: artist,
     idx,
     preview_file_url,
@@ -55,20 +56,34 @@ export function Modal(props) {
     )
   }
   const danbooru_url = `https://danbooru.donmai.us/posts/${id}`
-  const title =
-    `${idx + 1}: ` +
-    (character ? character : "original character") +
-    (artist ? " by " + artist : "")
+  const title = (artist ? `By "${artist}"` : "Artist Unknown")
 
-    const modalClasses = [
-      "modal",
-      "show-modal",
-    ]
+  const modalClasses = [
+    "modal",
+    "show-modal",
+  ]
 
-    const imgContainerClasses = [
-      "img-resize",
-      RATING_TO_CLASS[rating],
-    ]
+  const imgContainerClasses = [
+    "img-resize",
+    RATING_TO_CLASS[rating],
+  ]
+
+  const TagList = ({ title, list }) => {
+    return <div className="tag-list">
+      <div className="tag-list-title">
+        <h2>{title}</h2>
+      </div>
+      <div className="tag-list-coll">
+        {list.split(' ').map(tag => <p key={tag}>{tag.split('_').join(' ')}</p>)}
+      </div>
+    </div>
+  }
+
+  const AllTags = ({ tags }) => {
+    return <div className="tag-list-container">
+      {tags.map(t => <TagList {...t} key={t.title} />)}
+    </div>
+  }
 
   return (
     <div className={modalClasses.join(' ')}>
@@ -136,9 +151,16 @@ export function Modal(props) {
               <FontAwesomeIcon icon={faChevronRight} />
             </div>
           </div>
-          <div className="tag-list">
-            {props.pic.tag_string_general.split(' ').map(tag => <p key={tag}>{tag.split('_').join(' ')}</p>)}
-          </div>
+          <AllTags tags={[
+            {
+              title: 'Character(s)',
+              list: (character ? character : "original_character"),
+            },
+            {
+              title: 'Tags',
+              list: generalTags,
+            },
+          ]}/>
         </div>
       </OutsideNotifier>
     </div >
