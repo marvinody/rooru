@@ -26,7 +26,7 @@ export const searchTags = _.debounce((searchQuery) => async dispatch => {
 
     const { data: tags } = await axios.get(`https://danbooru.donmai.us/autocomplete.json`, {
       params: {
-        'search[query]': searchQuery,
+        'search[query]': `*${searchQuery}*`,
         'search[type]': "tag_query",
         limit: 10,
       }

@@ -18,7 +18,7 @@ export default function (props) {
   ]
   return (
     <div className={classes.join(' ')} onClick={onClick}>
-      <img src={props.preview_file_url} alt={props.tag_string} title={props.tag_string}></img>
+      <img src={props.preview_file_url} alt={props.tag_string_character} title={props.tag_string_character}></img>
     </div>
   )
 }
