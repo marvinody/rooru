@@ -1,8 +1,11 @@
 import history from '../history'
 import { resetPage } from './page'
 import { getPics } from './pics'
+
 const SET_TAGS = 'SET_TAGS'
 
+// const specialEncode = s => s.replace(/\+/, "%2B");
+const specialDecode = s => s.replace(/%2B/, "+");
 
 const initialState = (function () {
   if (!history.location.search) {
@@ -13,14 +16,34 @@ const initialState = (function () {
     return []
   }
   const tags = qs.get('tags')
-  return tags.split('+').filter(t => t.length > 0)
+  console.log({tags})
+  const semiFormattedTags = 
+  tags
+  .split(',')
+  .filter(t => t.length > 0)
+  .map(s => s.replace(/ /, '+'))
+  .map(s => {
+    const parsed = specialDecode(s)
+    const isPositive = parsed[0] === '+'
+    return {
+      value: parsed.slice(1), 
+      positive: isPositive,
+    }
+  })
+  console.log({semiFormattedTags})
+
+    return semiFormattedTags;
 
 })()
 
 const updateURL = (tags) => {
-  const qs = new URLSearchParams(history.location.search)
-  qs.set("tags", tags.join("+"))
-  history.push(`${window.location.pathname}?${qs.toString()}`);
+  const tagStr = tags.map(t => {
+      if(t.positive) {
+        return `+${t.value}`;
+      }
+      return `-${t.value}`;
+    }).join(",")
+  history.push(`${window.location.pathname}?tags=${tagStr}`);
 }
 
 const changeTags = tags => ({
@@ -32,6 +55,20 @@ const changeTags = tags => ({
 export const removeTag = (tag) => (dispatch, getState) => {
   const tags = getState().tags
   const newTags = tags.filter(t => t !== tag)
+  dispatch(resetPage())
+  dispatch(setTags(newTags))
+  dispatch(getPics())
+}
+
+export const toggleTag = (tag) => (dispatch, getState) => {
+  const tags = getState().tags
+  const newTags = tags.map(t => {
+    if(t !== tag) { return t }
+    return {
+      ...t,
+      positive: !t.positive
+    }
+  })
   dispatch(resetPage())
   dispatch(setTags(newTags))
   dispatch(getPics())

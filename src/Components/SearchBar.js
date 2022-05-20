@@ -3,7 +3,8 @@ import '../css/SearchBar.css'
 import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
-import { setTags, removeTag, searchTags, toggleSafe, toggleQuestionable, toggleExplicit } from '../store'
+import numeral from 'numeral'
+import { setTags, removeTag, searchTags, toggleTag, toggleSafe, toggleQuestionable, toggleExplicit } from '../store'
 
 const SearchBar = function SearchBar(props) {
   const [input, setInput] = useState("")
@@ -17,8 +18,13 @@ const SearchBar = function SearchBar(props) {
     }
   }
 
-  const onSelect = (event, { suggestionValue }) => {
-    const newTags = [...props.tags, suggestionValue]
+  const onSelect = (event, { suggestion }) => {
+    const tag = {
+      value: suggestion.value,
+      positive: true,
+      postCount: suggestion.post_count,
+    }
+    const newTags = [...props.tags, tag]
     props.setTags(newTags)
     resetInput()
   }
@@ -42,6 +48,14 @@ const SearchBar = function SearchBar(props) {
     },
   ]
 
+  const Tag = ({ tag }) => {
+    const tagSignClass = `tag-sign ${tag.positive ? 'positive' : 'negative'}`
+    return <div className='tag-container' >
+      <div className={tagSignClass} onClick={() => props.toggleTag(tag)} >{tag.positive ? '+' : '-'}</div>
+      <div className='tag' onClick={() => props.unsetTag(tag)}>{tag.value}</div>
+    </div>
+  }
+
   return (
     <div className='top-bar'>
 
@@ -59,16 +73,18 @@ const SearchBar = function SearchBar(props) {
             className: "search-container"
           }}
           renderSuggestion={tagObj => {
+            const amt = numeral(tagObj.post_count).format('0[.]0a')
+            const amtStr = `- (${amt})`
             if (tagObj.type === 'tag-alias') {
-              return (<div>{tagObj.antecedent} -&gt; {tagObj.label}</div>)
+              return (<div>{tagObj.antecedent} -&gt; {tagObj.label} {amtStr}</div>)
             }
-            return (<div>{tagObj.label}</div>)
+            return (<div>{tagObj.label} {amtStr}</div>)
           }}
         />
 
         <div className='rating-controller'>
           {
-            ratingOptions.map(({key, toggle}) => {
+            ratingOptions.map(({ key, toggle }) => {
               const displayValue = key.toUpperCase();
               const value = props.ratingFilters[key];
               const className = 'rating-control ' + (value ? '' : 'disabled');
@@ -79,8 +95,10 @@ const SearchBar = function SearchBar(props) {
         </div>
       </div>
 
+
+
       <div className='tags-bar'>
-        {props.tags.map(tag => (<span key={tag} className='tag' onClick={() => props.unsetTag(tag)}>{tag}</span>))}
+        {props.tags.map(tag => <Tag key={tag.value} tag={tag} />)}
       </div>
     </div>
 
@@ -100,6 +118,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   setTags: tags => dispatch(setTags(tags)),
   unsetTag: tag => dispatch(removeTag(tag)),
+  toggleTag: tag => dispatch(toggleTag(tag)),
   searchTags: value => dispatch(searchTags(value)),
   resetSearchTags: () => dispatch(searchTags([])),
   toggleSafe: () => dispatch(toggleSafe()),
