@@ -38,15 +38,37 @@
   }
 }
 
-.tag {
-  padding: 3px;
-  cursor: pointer;
-  padding: 8px 16px;
+.tag-container {
+  display:flex;
   margin: 4px;
   border: 2px solid black;
   border-radius: 4px;
   background-color: #F0BCE1;
   color: black;
+  align-items: center;
+  padding: 4px;
+}
+
+.tag-sign {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 2px;
+
+}
+
+.tag-sign.positive {
+  background-color: green;
+  color: white;
+}
+
+.tag-sign.negative {
+  background-color: red;
+  color: black;
+}
+
+.tag {
+  padding: 3px;
+  cursor: pointer;
 }
 
 

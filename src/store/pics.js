@@ -5,6 +5,8 @@ import { setHasNoMorePics } from './hasPics'
 import { setDoneLoading, setLoading } from './loadingPics'
 import { incPage, RESET_PAGE } from './page'
 const LOAD_PICS = 'LOAD_PICS'
+const specialEncode = s => s.replace(/\+/, "%2B");
+
 
 // const fakeDataGen = () => {
 //   let id = 0
@@ -73,7 +75,11 @@ export const getPics = () => async (dispatch, getState) => {
   //   dispatch(setDoneLoading())
   //   return
   // }
-  const formedTags = tags.map(tag => tag.replace(' ', '_'))
+  const formedTags = tags.map(tag => {
+    const fullValue = `${tag.positive ? '' : '-'}${tag.value}`
+
+    return specialEncode(fullValue);
+  })
 
   const ratingTag = getRatingTag(ratingFilters);
 
