@@ -16,33 +16,31 @@ const initialState = (function () {
     return []
   }
   const tags = qs.get('tags')
-  console.log({tags})
-  const semiFormattedTags = 
-  tags
-  .split(',')
-  .filter(t => t.length > 0)
-  .map(s => s.replace(/ /, '+'))
-  .map(s => {
-    const parsed = specialDecode(s)
-    const isPositive = parsed[0] === '+'
-    return {
-      value: parsed.slice(1), 
-      positive: isPositive,
-    }
-  })
-  console.log({semiFormattedTags})
 
-    return semiFormattedTags;
+  const semiFormattedTags =
+    tags
+      .split(',')
+      .filter(t => t.length > 0)
+      .map(s => s.replace(/ /g, '+'))
+      .map(s => {
+        const parsed = specialDecode(s)
+        const isPositive = parsed[0] === '+'
+        return {
+          value: parsed.slice(1),
+          positive: isPositive,
+        }
+      })
+  return semiFormattedTags;
 
 })()
 
 const updateURL = (tags) => {
   const tagStr = tags.map(t => {
-      if(t.positive) {
-        return `+${t.value}`;
-      }
-      return `-${t.value}`;
-    }).join(",")
+    if (t.positive) {
+      return `+${t.value}`;
+    }
+    return `-${t.value}`;
+  }).join(",")
   history.push(`${window.location.pathname}?tags=${tagStr}`);
 }
 
@@ -63,7 +61,7 @@ export const removeTag = (tag) => (dispatch, getState) => {
 export const toggleTag = (tag) => (dispatch, getState) => {
   const tags = getState().tags
   const newTags = tags.map(t => {
-    if(t !== tag) { return t }
+    if (t !== tag) { return t }
     return {
       ...t,
       positive: !t.positive
