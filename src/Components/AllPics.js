@@ -3,16 +3,19 @@ import React, { useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 import '../css/AllPics.css'
-import { getPics, showModal } from '../store'
+import { getPics, showModal, loadTagMetadata } from '../store'
 import { selectPic } from '../store/selectedPic'
 import Loading from './Loading'
 import PicCard from './PicCard'
 
 export function AllPics(props) {
-  const { getNextPage } = props
+  const { getNextPage, loadTagMetadata } = props
   useEffect(() => {
     getNextPage()
   }, [getNextPage])
+  useEffect(() => {
+    loadTagMetadata()
+  }, [loadTagMetadata])
   const classes = [
     'scroller',
   ]
@@ -63,6 +66,7 @@ const mapDispatch = dispatch => ({
   }),
   showModal: () => dispatch(showModal()),
   selectPic: (pic, idx) => dispatch(selectPic(pic, idx)),
+  loadTagMetadata: () => dispatch(loadTagMetadata())
 })
 
 

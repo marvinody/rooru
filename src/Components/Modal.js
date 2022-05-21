@@ -10,7 +10,7 @@ import { Link } from "react-router-dom"
 import moment from 'moment'
 import "../css/Modal.css"
 import OutsideNotifier from "../OutsideNotifier"
-import { hideModal, nextPic, prevPic, setTags } from "../store"
+import { hideModal, nextPic, prevPic, loadTagMetadata, changeTags } from "../store"
 import { setDoneLoading } from "../store/loadingPic"
 import Loading from "./Loading"
 import DesktopSideBars from "./NavSideBars"
@@ -192,7 +192,10 @@ const mapDispatch = dispatch => ({
   nextPic: () => dispatch(nextPic()),
   prevPic: () => dispatch(prevPic()),
   setTags: (tags) => {
-    dispatch(setTags(tags));
+    // just set the tags (without metadata)
+    dispatch(changeTags(tags))
+    // this will call setTags for us with needed data
+    dispatch(loadTagMetadata())
     dispatch(hideModal());
     dispatch(setDoneLoading());
   },

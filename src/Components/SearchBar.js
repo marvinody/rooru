@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
 import numeral from 'numeral'
+import _ from 'lodash'
 import { setTags, removeTag, searchTags, toggleTag, toggleSafe, toggleQuestionable, toggleExplicit } from '../store'
 
 const SearchBar = function SearchBar(props) {
@@ -32,6 +33,11 @@ const SearchBar = function SearchBar(props) {
   const onFetch = ({ value }) => {
     props.searchTags(value)
   }
+
+  const debouncedOnFetch = _.debounce(onFetch, 125, {
+    leading: false,
+    trailing: true,
+  })
 
   const ratingOptions = [
     {
@@ -62,7 +68,7 @@ const SearchBar = function SearchBar(props) {
       <div className='search-bar'>
         <Autosuggest
           suggestions={props.searchedTags}
-          onSuggestionsFetchRequested={onFetch}
+          onSuggestionsFetchRequested={debouncedOnFetch}
           onSuggestionsClearRequested={props.resetSearchTags}
           onSuggestionSelected={onSelect}
           inputProps={inputProps}

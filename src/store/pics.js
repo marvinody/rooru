@@ -1,6 +1,5 @@
 
-import axios from 'axios'
-import qs from 'qs'
+import { searchPics } from '../util/api/danbooru';
 import { setHasNoMorePics } from './hasPics'
 import { setDoneLoading, setLoading } from './loadingPics'
 import { incPage, RESET_PAGE } from './page'
@@ -47,8 +46,7 @@ const getRatingTag = (ratings) => {
   }
 }
 
-const BASE_DANBOORU_URL = 'https://danbooru.donmai.us'
-const DANBOORU_POSTS_URL = [BASE_DANBOORU_URL, 'posts.json'].join('/')
+
 
 const initialState = [];
 
@@ -75,11 +73,13 @@ export const getPics = () => async (dispatch, getState) => {
   //   dispatch(setDoneLoading())
   //   return
   // }
-  const formedTags = tags.map(tag => {
-    const fullValue = `${tag.positive ? '' : '-'}${tag.value}`
+  const formedTags = [...tags]
+    .sort((a, b) => a.postCount - b.postCount)
+    .map(tag => {
+      const fullValue = `${tag.positive ? '' : '-'}${tag.value}`
 
-    return specialEncode(fullValue);
-  })
+      return specialEncode(fullValue);
+    })
 
   const ratingTag = getRatingTag(ratingFilters);
 
@@ -87,15 +87,10 @@ export const getPics = () => async (dispatch, getState) => {
     formedTags.push(ratingTag)
   }
 
-  const { data } = await axios.get(DANBOORU_POSTS_URL, {
-    params: {
-      page,
-      tags: formedTags.join('+'),
-    },
-    paramsSerializer: function (params) {
-      return qs.stringify(params, { encode: false })
-    },
-  })
+  const { data } = await searchPics({
+    page,
+    tags: formedTags.join('+')
+  });
 
   const viewable_pics = data
     .filter(pic => !pic.is_banned) // banned will never show up
