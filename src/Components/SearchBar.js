@@ -89,7 +89,7 @@ const SearchBar = function SearchBar(props) {
               const value = props.ratingFilters[key];
               const className = 'rating-control ' + (value ? '' : 'disabled');
 
-              return <div className={className} onClick={toggle}>{displayValue}</div>
+              return <div key={key} className={className} onClick={toggle}>{displayValue}</div>
             })
           }
         </div>

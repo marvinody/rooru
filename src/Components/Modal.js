@@ -7,9 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React from "react"
 import { connect } from "react-redux"
 import { Link } from "react-router-dom"
+import moment from 'moment'
 import "../css/Modal.css"
 import OutsideNotifier from "../OutsideNotifier"
-import { hideModal, nextPic, prevPic } from "../store"
+import { hideModal, nextPic, prevPic, setTags } from "../store"
 import { setDoneLoading } from "../store/loadingPic"
 import Loading from "./Loading"
 import DesktopSideBars from "./NavSideBars"
@@ -39,6 +40,7 @@ export function Modal(props) {
     image_height,
     image_width,
     rating,
+    created_at,
   } = props.pic
 
   const is_image = /jpe?g|png|gif/.test(file_ext)
@@ -67,13 +69,23 @@ export function Modal(props) {
     RATING_TO_CLASS[rating],
   ]
 
+  const onTagClick = (tagStr) => {
+    const tag = {
+      value: tagStr,
+      positive: true,
+    }
+
+    const newTags = [...props.tags, tag]
+    props.setTags(newTags)
+  }
+
   const TagList = ({ title, list }) => {
     return <div className="tag-list">
       <div className="tag-list-title">
         <h2>{title}</h2>
       </div>
       <div className="tag-list-coll">
-        {list.split(' ').map(tag => <p key={tag}>{tag.split('_').join(' ')}</p>)}
+        {list.split(' ').map(tag => <p key={tag} onClick={e => onTagClick(tag)}>{tag.split('_').join(' ')}</p>)}
       </div>
     </div>
   }
@@ -94,6 +106,7 @@ export function Modal(props) {
               <Link className="title-text" to={`/${id}`}>
                 {title}
               </Link>
+              <span>{moment(created_at).format('YYYY-MM-DD')}</span>
               <a href={danbooru_url} target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faExternalLinkAlt}></FontAwesomeIcon>
               </a>
@@ -170,6 +183,7 @@ const mapState = state => ({
   showModal: state.showModal,
   pic: state.selectedPic,
   loading: state.loadingPic,
+  tags: state.tags,
 })
 
 const mapDispatch = dispatch => ({
@@ -177,6 +191,11 @@ const mapDispatch = dispatch => ({
   doneLoading: () => dispatch(setDoneLoading()),
   nextPic: () => dispatch(nextPic()),
   prevPic: () => dispatch(prevPic()),
+  setTags: (tags) => {
+    dispatch(setTags(tags));
+    dispatch(hideModal());
+    dispatch(setDoneLoading());
+  },
 })
 
 export default connect(mapState, mapDispatch)(Modal)
