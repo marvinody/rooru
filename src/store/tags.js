@@ -1,4 +1,5 @@
 import history from '../history'
+import { tagSearchExact } from '../util/api/danbooru';
 import { resetPage } from './page'
 import { getPics } from './pics'
 
@@ -32,9 +33,10 @@ const initialState = (function () {
       })
   return semiFormattedTags;
 
-})()
+})();
 
 const updateURL = (tags) => {
+  console.log({tags})
   const tagStr = tags.map(t => {
     if (t.positive) {
       return `+${t.value}`;
@@ -44,7 +46,7 @@ const updateURL = (tags) => {
   history.push(`${window.location.pathname}?tags=${tagStr}`);
 }
 
-const changeTags = tags => ({
+export const changeTags = tags => ({
   type: SET_TAGS,
   tags,
 })
@@ -70,6 +72,41 @@ export const toggleTag = (tag) => (dispatch, getState) => {
   dispatch(resetPage())
   dispatch(setTags(newTags))
   dispatch(getPics())
+}
+
+export const loadTagMetadata = () => async (dispatch, getState) => {
+  const tags = getState().tags
+  const tagsWithoutMetadata = tags.filter(t => t.postCount === undefined)
+  const tagsWithMetadata = tags.filter(t => t.postCount !== undefined)
+
+  if(tagsWithoutMetadata.length > 0) {
+    const lookups = await Promise.all(tagsWithoutMetadata.map(async (tag) => {
+      const { data } = await tagSearchExact({
+        searchQuery: tag.value
+      });
+
+      const matchingTag = data.find(t => t.value === tag.value)
+      if(!matchingTag) {
+        return null;
+      }
+
+      return  {
+        value: matchingTag.value,
+        positive: tag.positive,
+        postCount: matchingTag.post_count,
+      }
+    }));
+
+    const newTags = [
+      ...tagsWithMetadata,
+      ...lookups.filter(t => Boolean(t)),
+    ]
+
+    dispatch(setTags(newTags))
+  }
+
+  // all data loaded, nothing to do
+  return;
 }
 
 export const setTags = (tags) => dispatch => {

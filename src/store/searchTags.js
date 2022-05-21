@@ -1,5 +1,4 @@
-import axios from 'axios'
-import _ from 'lodash'
+import { tagSearchWildcard } from '../util/api/danbooru'
 
 
 const SET_SEARCH_TAGS = 'SET_SEARCH_TAGS'
@@ -18,30 +17,20 @@ export const resetSearchTags = () => ({
 
 
 
-export const searchTags = _.debounce((searchQuery) => async dispatch => {
+export const searchTags =(searchQuery) => async dispatch => {
   try {
     if (searchQuery.length === 0) {
       return
     }
 
-    const { data: tags } = await axios.get(`https://danbooru.donmai.us/autocomplete.json`, {
-      params: {
-        'search[query]': `*${searchQuery}*`,
-        'search[type]': "tag_query",
-        limit: 10,
-      }
-    })
+    const { data: tags } = await tagSearchWildcard({ searchQuery })
+
     dispatch(setSearchTags(tags))
   } catch (err) {
     console.error(err)
     dispatch(setSearchTags([]))
-
   }
-
-}, 125, {
-  leading: true,
-  trailing: true,
-})
+}
 
 
 
