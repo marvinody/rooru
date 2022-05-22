@@ -36,7 +36,6 @@ const initialState = (function () {
 })();
 
 const updateURL = (tags) => {
-  console.log({tags})
   const tagStr = tags.map(t => {
     if (t.positive) {
       return `+${t.value}`;

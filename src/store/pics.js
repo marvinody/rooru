@@ -50,18 +50,7 @@ const getRatingTag = (ratings) => {
 
 const initialState = [];
 
-export const getPics = () => async (dispatch, getState) => {
-  const { loadingPics, hasPics } = getState()
-
-  if (loadingPics) {
-    return
-  }
-
-  if (!hasPics) {
-    return
-  }
-
-  dispatch(setLoading())
+const getPicsHelper = async (dispatch, getState) => {
   dispatch(incPage())
   const { page, tags, ratingFilters } = getState()
 
@@ -73,13 +62,16 @@ export const getPics = () => async (dispatch, getState) => {
   //   dispatch(setDoneLoading())
   //   return
   // }
-  const formedTags = [...tags]
-    .sort((a, b) => a.postCount - b.postCount)
-    .map(tag => {
-      const fullValue = `${tag.positive ? '' : '-'}${tag.value}`
 
-      return specialEncode(fullValue);
-    })
+  const sortedTags = [...tags].sort((a, b) => a.postCount - b.postCount)
+  const formedTags =
+    sortedTags
+      .slice(0, 2)
+      .map(tag => {
+        const fullValue = `${tag.positive ? '' : '-'}${tag.value}`
+
+        return specialEncode(fullValue);
+      })
 
   const ratingTag = getRatingTag(ratingFilters);
 
@@ -103,11 +95,57 @@ export const getPics = () => async (dispatch, getState) => {
     return
   }
 
+  // no extra processing needed
+  if (tags.length <= 2) {
+    dispatch({
+      type: LOAD_PICS,
+      data: viewable_pics,
+    })
+    return;
+  }
+
+  const extraTags = sortedTags.slice(2)
+  const extraFiltered = viewable_pics.filter(pic => {
+    const picTags = pic.tag_string.split(' ');
+    return extraTags.every(tag => {
+      const picHasTag = picTags.includes(tag.value)
+      if(tag.positive) {
+        return picHasTag
+      } else {
+        return !picHasTag
+      }
+    })
+  })
+
+  // not truly out of pics yet, go to next page
+  if(extraFiltered.length === 0) {
+    return await getPicsHelper(dispatch, getState);
+  }
+
+  // otherwise we DO have some pics to show
   dispatch({
     type: LOAD_PICS,
-    data: viewable_pics,
+    data: extraFiltered,
   })
-  dispatch(setDoneLoading())
+
+}
+
+export const getPics = () => async (dispatch, getState) => {
+  const { loadingPics, hasPics } = getState()
+
+  if (loadingPics) {
+    return
+  }
+
+  if (!hasPics) {
+    return
+  }
+
+  dispatch(setLoading());
+
+  await getPicsHelper(dispatch, getState);
+
+  dispatch(setDoneLoading());
 }
 
 
