@@ -10,7 +10,7 @@ const NavSideBars = (props) => {
   }
   return (
     <div className='sidebars' >
-      <div class='left desktop sidebar' onClick={props.prevPic}>
+      <div className='left desktop sidebar' onClick={props.prevPic}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </div>
 
