@@ -116,7 +116,7 @@ export function Modal(props) {
             </span>
           </div>
           <div className={imgContainerClasses.join(' ')}>
-            <div class="left sidebar mobile" onClick={props.prevPic}>
+            <div className="left sidebar mobile" onClick={props.prevPic}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </div>
 
