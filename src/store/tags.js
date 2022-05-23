@@ -2,13 +2,14 @@ import history from '../history'
 import { tagSearchExact } from '../util/api/danbooru';
 import { resetPage } from './page'
 import { getPics } from './pics'
+import store from './index'
 
 const SET_TAGS = 'SET_TAGS'
 
 // const specialEncode = s => s.replace(/\+/, "%2B");
 const specialDecode = s => s.replace(/%2B/, "+");
 
-const initialState = (function () {
+const parseTagsFromUrl = () => {
   if (!history.location.search) {
     return []
   }
@@ -33,6 +34,10 @@ const initialState = (function () {
       })
   return semiFormattedTags;
 
+}
+
+const initialState = (function () {
+  return parseTagsFromUrl();
 })();
 
 const updateURL = (tags) => {
@@ -44,6 +49,24 @@ const updateURL = (tags) => {
   }).join(",")
   history.push(`${window.location.pathname}?tags=${tagStr}`);
 }
+
+// detect forward & backward user changes in page
+// trigger reload if needed
+history.listen((e) => {
+  const currentURLTags = parseTagsFromUrl();
+
+  const { tags } = store.getState();
+
+  const formattedCurrentURL = currentURLTags.map(t => t.value).join(',')
+  const formattedCurrentState = tags.map(t => t.value).join(',')
+
+  if(formattedCurrentURL !== formattedCurrentState) {
+    store.dispatch(setTags(currentURLTags));
+    loadTagMetadata(store.dispatch, store.getState)
+  }
+
+})
+
 
 export const changeTags = tags => ({
   type: SET_TAGS,
@@ -78,18 +101,18 @@ export const loadTagMetadata = () => async (dispatch, getState) => {
   const tagsWithoutMetadata = tags.filter(t => t.postCount === undefined)
   const tagsWithMetadata = tags.filter(t => t.postCount !== undefined)
 
-  if(tagsWithoutMetadata.length > 0) {
+  if (tagsWithoutMetadata.length > 0) {
     const lookups = await Promise.all(tagsWithoutMetadata.map(async (tag) => {
       const { data } = await tagSearchExact({
         searchQuery: tag.value
       });
 
       const matchingTag = data.find(t => t.value === tag.value)
-      if(!matchingTag) {
+      if (!matchingTag) {
         return null;
       }
 
-      return  {
+      return {
         value: matchingTag.value,
         positive: tag.positive,
         postCount: matchingTag.post_count,
