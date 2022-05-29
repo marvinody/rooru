@@ -1,4 +1,3 @@
-
 import { searchPics } from '../util/api/danbooru';
 import { setHasNoMorePics } from './hasPics'
 import { setDoneLoading, setLoading } from './loadingPics'
@@ -23,27 +22,18 @@ const specialEncode = s => s.replace(/\+/, "%2B");
 // const generator = fakeDataGen()
 
 const getRatingTag = (ratings) => {
-  const ratingBitmask =
-    (ratings.safe) |
-    (ratings.questionable << 1) |
-    (ratings.explicit << 2)
+  const numberOfRatings = Object.keys(ratings).length
 
-  switch (ratingBitmask) {
-    case 0b001:
-      return 'rating:safe';
-    case 0b010:
-      return 'rating:questionable';
-    case 0b100:
-      return 'rating:explicit';
-    case 0b110:
-      return '-rating:safe';
-    case 0b101:
-      return '-rating:questionable';
-    case 0b011:
-      return '-rating:explicit';
-    default:
-      return null;
+  const includedRatings =
+    Object.entries(ratings)
+      .filter(([key, isEnabled]) => isEnabled)
+      .map(([key]) => key[0]);
+
+  if (includedRatings.length > 0 && includedRatings.length < numberOfRatings) {
+    return `rating:${includedRatings.join(',')}`
   }
+
+  return null;
 }
 
 
@@ -86,6 +76,9 @@ const getPicsHelper = async (dispatch, getState) => {
 
   const viewable_pics = data
     .filter(pic => !pic.is_banned) // banned will never show up
+    .filter(pic => !pic.is_deleted)
+    .filter(pic => !pic.is_flagged)
+    .filter(pic => !pic.is_pending)
     .filter(pic => pic.file_url) // and this lets us display to user
   // an empty file_url can be overcome later by checking source but not for right now
   // would need a backend and I would like to keep this client only for the time being
@@ -109,7 +102,7 @@ const getPicsHelper = async (dispatch, getState) => {
     const picTags = pic.tag_string.split(' ');
     return extraTags.every(tag => {
       const picHasTag = picTags.includes(tag.value)
-      if(tag.positive) {
+      if (tag.positive) {
         return picHasTag
       } else {
         return !picHasTag
@@ -118,7 +111,7 @@ const getPicsHelper = async (dispatch, getState) => {
   })
 
   // not truly out of pics yet, go to next page
-  if(extraFiltered.length === 0) {
+  if (extraFiltered.length === 0) {
     return await getPicsHelper(dispatch, getState);
   }
 

@@ -5,7 +5,7 @@ import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
 import numeral from 'numeral'
 import _ from 'lodash'
-import { setTags, removeTag, searchTags, toggleTag, toggleSafe, toggleQuestionable, toggleExplicit } from '../store'
+import { setTags, removeTag, searchTags, toggleTag, toggleGeneral, toggleSensitive, toggleQuestionable, toggleExplicit } from '../store'
 
 const SearchBar = function SearchBar(props) {
   const [input, setInput] = useState("")
@@ -41,8 +41,12 @@ const SearchBar = function SearchBar(props) {
 
   const ratingOptions = [
     {
-      key: 'safe',
-      toggle: props.toggleSafe,
+      key: 'general',
+      toggle: props.toggleGeneral,
+    },
+    {
+      key: 'sensitive',
+      toggle: props.toggleSensitive,
     },
     {
       key: 'questionable',
@@ -127,7 +131,8 @@ const mapDispatch = dispatch => ({
   toggleTag: tag => dispatch(toggleTag(tag)),
   searchTags: value => dispatch(searchTags(value)),
   resetSearchTags: () => dispatch(searchTags([])),
-  toggleSafe: () => dispatch(toggleSafe()),
+  toggleGeneral: () => dispatch(toggleGeneral()),
+  toggleSensitive: () => dispatch(toggleSensitive()),
   toggleQuestionable: () => dispatch(toggleQuestionable()),
   toggleExplicit: () => dispatch(toggleExplicit()),
 })
