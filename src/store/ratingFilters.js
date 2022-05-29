@@ -2,71 +2,59 @@ import { getPics } from './pics'
 import { resetPage } from './page'
 
 import stateSaver from './stateSaver'
-const TOGGLE_SAFE = 'TOGGLE_SAFE';
+const TOGGLE_GENERAL = 'TOGGLE_GENERAL';
+const TOGGLE_SENSITIVE = 'TOGGLE_SENSITIVE';
 const TOGGLE_QUESTIONABLE = 'TOGGLE_QUESTIONABLE';
 const TOGGLE_EXPLICIT = 'TOGGLE_EXPLICIT';
-
-
-
 
 const initialState = stateSaver({
   mapStateToSave: state => state.ratingFilters,
   key: 'ratingFilters',
   initialState: {
-    safe: true,
+    general: true,
+    sensitive: false,
     questionable: false,
     explicit: false,
   },
-  actionsToSaveOn: [TOGGLE_SAFE, TOGGLE_QUESTIONABLE, TOGGLE_EXPLICIT]
+  actionsToSaveOn: [TOGGLE_GENERAL, TOGGLE_SENSITIVE, TOGGLE_QUESTIONABLE, TOGGLE_EXPLICIT]
 })
 
-const _toggleSafe = () => ({
-  type: TOGGLE_SAFE,
-})
-
-const _toggleQuestionable = () => ({
-  type: TOGGLE_QUESTIONABLE,
-})
-
-const _toggleExplicit = () => ({
-  type: TOGGLE_EXPLICIT,
-})
-
-export const toggleSafe = () => (dispatch) => {
+const toggleHelper = (constant) => () => (dispatch) => {
   dispatch(resetPage())
-  dispatch(_toggleSafe())
+  dispatch({
+    type: constant
+  })
   dispatch(getPics())
 }
 
-export const toggleQuestionable = () => (dispatch) => {
-  dispatch(resetPage())
-  dispatch(_toggleQuestionable())
-  dispatch(getPics())
-}
+export const toggleGeneral = toggleHelper(TOGGLE_GENERAL)
+export const toggleSensitive = toggleHelper(TOGGLE_SENSITIVE)
+export const toggleQuestionable = toggleHelper(TOGGLE_QUESTIONABLE)
+export const toggleExplicit = toggleHelper(TOGGLE_EXPLICIT)
 
-export const toggleExplicit = () => (dispatch) => {
-  dispatch(resetPage())
-  dispatch(_toggleExplicit())
-  dispatch(getPics())
-}
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_SAFE:
+    case TOGGLE_GENERAL:
       return {
         ...state,
-        safe: !state.safe
-      }
+        general: !state.general,
+      }        
+    case TOGGLE_SENSITIVE:
+      return {
+        ...state,
+        sensitive: !state.sensitive,
+      }        
     case TOGGLE_QUESTIONABLE:
       return {
         ...state,
-        questionable: !state.questionable
-      }
+        questionable: !state.questionable,
+      }        
     case TOGGLE_EXPLICIT:
       return {
         ...state,
-        explicit: !state.explicit
-      }
+        explicit: !state.explicit,
+      }        
     default:
       return state
   }
