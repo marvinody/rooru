@@ -6,7 +6,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import React from "react"
 import { connect } from "react-redux"
-import { Link } from "react-router-dom"
 import moment from 'moment'
 import "../css/Modal.css"
 import OutsideNotifier from "../OutsideNotifier"
@@ -32,9 +31,12 @@ export function Modal(props) {
     large_file_url,
     file_ext,
     id,
+    idx,
     tag_string,
     tag_string_character: character,
     tag_string_general: generalTags,
+    tag_string_meta: metaTags,
+    tag_string_copyright: seriesTags,
     tag_string_artist: artist,
     preview_file_url,
     image_height,
@@ -80,6 +82,9 @@ export function Modal(props) {
   }
 
   const TagList = ({ title, list }) => {
+    if(!list || list.length === 0) {
+      return null;
+    }
     return <div className="tag-list">
       <div className="tag-list-title">
         <h2>{title}</h2>
@@ -96,6 +101,8 @@ export function Modal(props) {
     </div>
   }
 
+  let titleAffix = `${idx + 1} / ${props.hasMorePics ? "?" : props.numPicsLoaded}`
+
   return (
     <div className={modalClasses.join(' ')}>
       <OutsideNotifier onOutsideClick={props.hideModal}>
@@ -103,9 +110,9 @@ export function Modal(props) {
         <div className="modal-content">
           <div className="controls">
             <div className="title">
-              <Link className="title-text" to={`/${id}`}>
-                {title}
-              </Link>
+              <div className="title-text">
+                {`${title} - ${titleAffix}`}
+              </div>
               <span>{moment(created_at).format('YYYY-MM-DD')}</span>
               <a href={danbooru_url} target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon={faExternalLinkAlt}></FontAwesomeIcon>
@@ -169,8 +176,16 @@ export function Modal(props) {
               list: (character ? character : "original_character"),
             },
             {
-              title: 'Tags',
+              title: 'General Tags',
               list: generalTags,
+            },
+            {
+              title: 'Series',
+              list: seriesTags,
+            },
+            {
+              title: 'Meta Tags',
+              list: metaTags,
             },
           ]}/>
         </div>
@@ -182,6 +197,8 @@ export function Modal(props) {
 const mapState = state => ({
   showModal: state.showModal,
   pic: state.selectedPic,
+  numPicsLoaded: state.pics.length,
+  hasMorePics: state.hasPics,
   loading: state.loadingPic,
   tags: state.tags,
 })

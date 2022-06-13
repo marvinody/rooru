@@ -139,6 +139,7 @@ div.title {
   flex-direction: column;
   max-width: 80%;
   align-self: center;
+  margin-bottom: 32px;
 }
 
 .tag-list {
