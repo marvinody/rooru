@@ -31,7 +31,7 @@ const SearchBar = function SearchBar(props) {
   }
 
   const onFetch = ({ value }) => {
-    props.searchTags(value)
+    props.searchTags(value.replace(/ /g, '_'))
   }
 
   const debouncedOnFetch = _.debounce(onFetch, 125, {
