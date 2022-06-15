@@ -1,9 +1,8 @@
 
 import '../css/Settings.css'
-import React, { useState } from 'react'
+import React, { } from 'react'
 import Switch from 'react-ios-switch'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 
 import { toggleSetting } from '../store'
 
