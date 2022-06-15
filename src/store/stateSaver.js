@@ -8,10 +8,11 @@ const stateSaver = ({
   actionsToSaveOn,
   serialize = JSON.stringify,
   deserialize = JSON.parse,
+  alwaysUseInitialState = false, // used for debugging when adding lots of new sub states
 }) => {
-  const reduxMiddleware = ({getState}) => next => action => {
-    const result =  next(action)
-    if(actionsToSaveOn.includes(action.type)) {
+  const reduxMiddleware = ({ getState }) => next => action => {
+    const result = next(action)
+    if (actionsToSaveOn.includes(action.type)) {
       const saveState = mapStateToSave(getState())
       localStorage.setItem(key, serialize(saveState))
     }
@@ -23,7 +24,7 @@ const stateSaver = ({
   middlewares.push(reduxMiddleware)
 
   const previouslySavedValue = deserialize(localStorage.getItem(key))
-  if (previouslySavedValue === null) {
+  if (alwaysUseInitialState || previouslySavedValue === null) {
     return initialState
   }
   return previouslySavedValue
