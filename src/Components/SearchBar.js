@@ -19,7 +19,7 @@ const SearchBar = function SearchBar(props) {
     value: input,
     onChange: (evt, { newValue }) => {
       setInput(newValue)
-    }
+    },
   }
 
   const onSelect = (event, { suggestion }) => {
@@ -83,7 +83,7 @@ const SearchBar = function SearchBar(props) {
             return tagObj.value
           }}
           containerProps={{
-            className: "search-container"
+            className: "search-container",
           }}
           renderSuggestion={tagObj => {
             const amt = numeral(tagObj.post_count).format('0[.]0a')
@@ -98,9 +98,9 @@ const SearchBar = function SearchBar(props) {
         <div className='rating-controller'>
           {
             ratingOptions.map(({ key, toggle }) => {
-              const displayValue = key.toUpperCase();
-              const value = props.ratingFilters[key];
-              const className = 'rating-control ' + (value ? '' : 'disabled');
+              const displayValue = key.toUpperCase()
+              const value = props.ratingFilters[key]
+              const className = 'rating-control ' + (value ? '' : 'disabled')
 
               return <div key={key} className={className} onClick={toggle}>{displayValue}</div>
             })
@@ -129,7 +129,7 @@ const mapState = state => ({
   loadingPics: state.loadingPics,
   searchedTags: state.searchTags,
   hasMore: state.hasPics,
-  ratingFilters: state.ratingFilters
+  ratingFilters: state.ratingFilters,
 })
 
 const mapDispatch = dispatch => ({
@@ -142,7 +142,7 @@ const mapDispatch = dispatch => ({
   toggleSensitive: () => dispatch(toggleSensitive()),
   toggleQuestionable: () => dispatch(toggleQuestionable()),
   toggleExplicit: () => dispatch(toggleExplicit()),
-  toggleSettings: () => dispatch(toggleSettingsPage())
+  toggleSettings: () => dispatch(toggleSettingsPage()),
 })
 
 

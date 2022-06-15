@@ -9,7 +9,7 @@ import { toggleSetting } from '../store'
 const Settings = function Settings(props) {
   const classes = [
     'settings-menu',
-  ];
+  ]
   if (!props.showSettings) {
     classes.push('hide')
   }

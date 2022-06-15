@@ -29,7 +29,7 @@ export const resetPage = () => ({
 })
 
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case INCREMENT_PAGE:
       return state + 1
@@ -41,3 +41,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

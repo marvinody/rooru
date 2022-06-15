@@ -7,14 +7,14 @@ const RATING_TO_CLASS = {
   'e': 'rating-explicit',
 }
 
-export default function (props) {
+const PicCard = (props) => {
   const onClick = () => {
     props.setPicToCard()
     props.showModal()
   }
   const classes = [
     'pic-card',
-    RATING_TO_CLASS[props.rating]
+    RATING_TO_CLASS[props.rating],
   ]
   return (
     <div className={classes.join(' ')} onClick={onClick}>
@@ -22,3 +22,4 @@ export default function (props) {
     </div>
   )
 }
+export default PicCard

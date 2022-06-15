@@ -1,11 +1,11 @@
-import { setLoading } from './loadingPic'
+import { setLoadingPic } from './loadingPic'
 import { getPics } from "./pics"
 const SELECT_PIC = 'SELECT_PIC'
 
 const initialState = {}
 
 export const selectPic = (pic, idx) => dispatch => {
-  dispatch(setLoading())
+  dispatch(setLoadingPic())
   dispatch({
     type: SELECT_PIC,
     pic,
@@ -41,7 +41,7 @@ export const prevPic = () => (dispatch, getState) => {
   dispatch(selectPic(pics[newIdx], newIdx))
 }
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_PIC:
       return { ...action.pic, idx: action.idx }
@@ -49,3 +49,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

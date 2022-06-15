@@ -10,10 +10,10 @@ const KeyBindings = (props) => {
     switch (event.code) {
       case "Escape":
         if(props.showModal) {
-          event.preventDefault();
+          event.preventDefault()
           return props.showModal && props.hideModal()
         } else {
-          return; // do nothing if hidden modal
+          return // do nothing if hidden modal
         }
       case "ArrowLeft":
         return props.showModal && props.prevPic()

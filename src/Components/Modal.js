@@ -10,7 +10,7 @@ import moment from 'moment'
 import "../css/Modal.css"
 import OutsideNotifier from "../OutsideNotifier"
 import { hideModal, nextPic, prevPic, loadTagMetadata, changeTags } from "../store"
-import { setDoneLoading } from "../store/loadingPic"
+import { setDoneLoadingPic } from "../store/loadingPic"
 import Loading from "./Loading"
 import DesktopSideBars from "./NavSideBars"
 const notFoundUrl = "/404.jpg"
@@ -82,8 +82,8 @@ export function Modal(props) {
   }
 
   const TagList = ({ title, list }) => {
-    if(!list || list.length === 0) {
-      return null;
+    if (!list || list.length === 0) {
+      return null
     }
     return <div className="tag-list">
       <div className="tag-list-title">
@@ -189,7 +189,7 @@ export function Modal(props) {
               title: 'Meta Tags',
               list: metaTags,
             },
-          ]}/>
+          ]} />
         </div>
       </OutsideNotifier>
     </div >
@@ -210,7 +210,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   hideModal: () => dispatch(hideModal()),
-  doneLoading: () => dispatch(setDoneLoading()),
+  doneLoading: () => dispatch(setDoneLoadingPic()),
   nextPic: () => dispatch(nextPic()),
   prevPic: () => dispatch(prevPic()),
   setTags: (tags) => {
@@ -218,8 +218,8 @@ const mapDispatch = dispatch => ({
     dispatch(changeTags(tags))
     // this will call setTags for us with needed data
     dispatch(loadTagMetadata())
-    dispatch(hideModal());
-    dispatch(setDoneLoading());
+    dispatch(hideModal())
+    dispatch(setDoneLoadingPic())
   },
 })
 

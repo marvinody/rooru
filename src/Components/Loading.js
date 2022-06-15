@@ -4,7 +4,7 @@ import '../css/Loading.css'
 export default function Loading({
   className,
   size = 64,
-  highContrast = false, }) {
+  highContrast = false }) {
   const smallDiv = <div
     style={{
       width: 51 / 64 * size,
@@ -15,7 +15,7 @@ export default function Loading({
     <div className={"lds-ring " + className} style={{
       height: size,
       width: size,
-      mixBlendMode: highContrast ? 'difference' : 'initial'
+      mixBlendMode: highContrast ? 'difference' : 'initial',
     }}>
       {smallDiv}
       {smallDiv}

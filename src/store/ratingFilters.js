@@ -2,10 +2,10 @@ import { getPics } from './pics'
 import { resetPage } from './page'
 
 import stateSaver from './stateSaver'
-const TOGGLE_GENERAL = 'TOGGLE_GENERAL';
-const TOGGLE_SENSITIVE = 'TOGGLE_SENSITIVE';
-const TOGGLE_QUESTIONABLE = 'TOGGLE_QUESTIONABLE';
-const TOGGLE_EXPLICIT = 'TOGGLE_EXPLICIT';
+const TOGGLE_GENERAL = 'TOGGLE_GENERAL'
+const TOGGLE_SENSITIVE = 'TOGGLE_SENSITIVE'
+const TOGGLE_QUESTIONABLE = 'TOGGLE_QUESTIONABLE'
+const TOGGLE_EXPLICIT = 'TOGGLE_EXPLICIT'
 
 const initialState = stateSaver({
   mapStateToSave: state => state.ratingFilters,
@@ -16,13 +16,13 @@ const initialState = stateSaver({
     questionable: false,
     explicit: false,
   },
-  actionsToSaveOn: [TOGGLE_GENERAL, TOGGLE_SENSITIVE, TOGGLE_QUESTIONABLE, TOGGLE_EXPLICIT]
+  actionsToSaveOn: [TOGGLE_GENERAL, TOGGLE_SENSITIVE, TOGGLE_QUESTIONABLE, TOGGLE_EXPLICIT],
 })
 
 const toggleHelper = (constant) => () => (dispatch) => {
   dispatch(resetPage())
   dispatch({
-    type: constant
+    type: constant,
   })
   dispatch(getPics())
 }
@@ -33,7 +33,7 @@ export const toggleQuestionable = toggleHelper(TOGGLE_QUESTIONABLE)
 export const toggleExplicit = toggleHelper(TOGGLE_EXPLICIT)
 
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_GENERAL:
       return {
@@ -59,3 +59,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

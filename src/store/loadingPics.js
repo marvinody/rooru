@@ -12,7 +12,7 @@ export const setDoneLoading = () => ({
   type: SET_DONE_LOADING,
 })
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOADING:
       return true
@@ -23,3 +23,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer
