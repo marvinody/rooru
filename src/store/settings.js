@@ -1,6 +1,6 @@
 import stateSaver from './stateSaver'
-const TOGGLE_SETTINGS_VIS = 'TOGGLE_SETTINGS_VIS';
-const TOGGLE_SETTINGS_BOOL = 'TOGGLE_SETTINGS_BOOL';
+const TOGGLE_SETTINGS_VIS = 'TOGGLE_SETTINGS_VIS'
+const TOGGLE_SETTINGS_BOOL = 'TOGGLE_SETTINGS_BOOL'
 
 
 const initialState = stateSaver({
@@ -33,7 +33,7 @@ export const toggleSetting = (key) => {
 }
 
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_SETTINGS_VIS:
       return {
@@ -49,3 +49,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

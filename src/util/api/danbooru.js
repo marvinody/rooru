@@ -24,7 +24,7 @@ export const tagSearchWildcard = async ({ searchQuery }) => {
       'search[query]': `*${searchQuery}*`,
       'search[type]': "tag_query",
       limit: 10,
-    }
+    },
   })
 }
 
@@ -34,7 +34,7 @@ export const tagSearchExact = async ({ searchQuery }) => {
       'search[query]': `${searchQuery}`,
       'search[type]': "tag_query",
       limit: 10,
-    }
+    },
   })
 }
 

@@ -1,9 +1,9 @@
-import { searchPics } from '../util/api/danbooru';
+import { searchPics } from '../util/api/danbooru'
 import { setHasNoMorePics } from './hasPics'
 import { setDoneLoading, setLoading } from './loadingPics'
 import { incPage, RESET_PAGE } from './page'
 const LOAD_PICS = 'LOAD_PICS'
-const specialEncode = s => s.replace(/\+/, "%2B");
+const specialEncode = s => s.replace(/\+/, "%2B")
 
 
 // const fakeDataGen = () => {
@@ -27,18 +27,18 @@ const getRatingTag = (ratings) => {
   const includedRatings =
     Object.entries(ratings)
       .filter(([key, isEnabled]) => isEnabled)
-      .map(([key]) => key[0]);
+      .map(([key]) => key[0])
 
   if (includedRatings.length > 0 && includedRatings.length < numberOfRatings) {
     return `rating:${includedRatings.join(',')}`
   }
 
-  return null;
+  return null
 }
 
 
 
-const initialState = [];
+const initialState = []
 
 const getPicsHelper = async (dispatch, getState) => {
   dispatch(incPage())
@@ -60,10 +60,10 @@ const getPicsHelper = async (dispatch, getState) => {
       .map(tag => {
         const fullValue = `${tag.positive ? '' : '-'}${tag.value}`
 
-        return specialEncode(fullValue);
+        return specialEncode(fullValue)
       })
 
-  const ratingTag = getRatingTag(ratingFilters);
+  const ratingTag = getRatingTag(ratingFilters)
 
   if (ratingTag) {
     formedTags.push(ratingTag)
@@ -71,8 +71,8 @@ const getPicsHelper = async (dispatch, getState) => {
 
   const { data } = await searchPics({
     page,
-    tags: formedTags.join('+')
-  });
+    tags: formedTags.join('+'),
+  })
 
   const viewable_pics = data
     .filter(pic => !pic.is_banned) // banned will never show up
@@ -94,12 +94,12 @@ const getPicsHelper = async (dispatch, getState) => {
       type: LOAD_PICS,
       data: viewable_pics,
     })
-    return;
+    return
   }
 
   const extraTags = sortedTags.slice(2)
   const extraFiltered = viewable_pics.filter(pic => {
-    const picTags = pic.tag_string.split(' ');
+    const picTags = pic.tag_string.split(' ')
     return extraTags.every(tag => {
       const picHasTag = picTags.includes(tag.value)
       if (tag.positive) {
@@ -112,7 +112,7 @@ const getPicsHelper = async (dispatch, getState) => {
 
   // not truly out of pics yet, go to next page
   if (extraFiltered.length === 0) {
-    return await getPicsHelper(dispatch, getState);
+    return await getPicsHelper(dispatch, getState)
   }
 
   // otherwise we DO have some pics to show
@@ -134,16 +134,16 @@ export const getPics = () => async (dispatch, getState) => {
     return
   }
 
-  dispatch(setLoading());
+  dispatch(setLoading())
 
-  await getPicsHelper(dispatch, getState);
+  await getPicsHelper(dispatch, getState)
 
-  dispatch(setDoneLoading());
+  dispatch(setDoneLoading())
 }
 
 
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESET_PAGE:
       return []
@@ -153,3 +153,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

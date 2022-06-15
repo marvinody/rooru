@@ -19,8 +19,8 @@ export function AllPics(props) {
   const classes = [
     'scroller',
   ]
-  if(props.showSettings) {
-    classes.push('hide');
+  if (props.showSettings) {
+    classes.push('hide')
   }
   return (
     <div className={classes.join(' ')}>
@@ -70,7 +70,7 @@ const mapDispatch = dispatch => ({
   }),
   showModal: () => dispatch(showModal()),
   selectPic: (pic, idx) => dispatch(selectPic(pic, idx)),
-  loadTagMetadata: () => dispatch(loadTagMetadata())
+  loadTagMetadata: () => dispatch(loadTagMetadata()),
 })
 
 

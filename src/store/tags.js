@@ -1,5 +1,5 @@
 import history from '../history'
-import { tagSearchExact } from '../util/api/danbooru';
+import { tagSearchExact } from '../util/api/danbooru'
 import { resetPage } from './page'
 import { getPics } from './pics'
 import store from './index'
@@ -7,7 +7,7 @@ import store from './index'
 const SET_TAGS = 'SET_TAGS'
 
 // const specialEncode = s => s.replace(/\+/, "%2B");
-const specialDecode = s => s.replace(/%2B/, "+");
+const specialDecode = s => s.replace(/%2B/, "+")
 
 const parseTagsFromUrl = () => {
   if (!history.location.search) {
@@ -32,36 +32,36 @@ const parseTagsFromUrl = () => {
           positive: isPositive,
         }
       })
-  return semiFormattedTags;
+  return semiFormattedTags
 
 }
 
 const initialState = (function () {
-  return parseTagsFromUrl();
-})();
+  return parseTagsFromUrl()
+})()
 
 const updateURL = (tags) => {
   const tagStr = tags.map(t => {
     if (t.positive) {
-      return `+${t.value}`;
+      return `+${t.value}`
     }
-    return `-${t.value}`;
+    return `-${t.value}`
   }).join(",")
-  history.push(`${window.location.pathname}?tags=${tagStr}`);
+  history.push(`${window.location.pathname}?tags=${tagStr}`)
 }
 
 // detect forward & backward user changes in page
 // trigger reload if needed
 history.listen((e) => {
-  const currentURLTags = parseTagsFromUrl();
+  const currentURLTags = parseTagsFromUrl()
 
-  const { tags } = store.getState();
+  const { tags } = store.getState()
 
   const formattedCurrentURL = currentURLTags.map(t => t.value).join(',')
   const formattedCurrentState = tags.map(t => t.value).join(',')
 
   if(formattedCurrentURL !== formattedCurrentState) {
-    store.dispatch(setTags(currentURLTags));
+    store.dispatch(setTags(currentURLTags))
     loadTagMetadata(store.dispatch, store.getState)
   }
 
@@ -88,7 +88,7 @@ export const toggleTag = (tag) => (dispatch, getState) => {
     if (t !== tag) { return t }
     return {
       ...t,
-      positive: !t.positive
+      positive: !t.positive,
     }
   })
   dispatch(resetPage())
@@ -104,12 +104,12 @@ export const loadTagMetadata = () => async (dispatch, getState) => {
   if (tagsWithoutMetadata.length > 0) {
     const lookups = await Promise.all(tagsWithoutMetadata.map(async (tag) => {
       const { data } = await tagSearchExact({
-        searchQuery: tag.value
-      });
+        searchQuery: tag.value,
+      })
 
       const matchingTag = data.find(t => t.value === tag.value)
       if (!matchingTag) {
-        return null;
+        return null
       }
 
       return {
@@ -117,7 +117,7 @@ export const loadTagMetadata = () => async (dispatch, getState) => {
         positive: tag.positive,
         postCount: matchingTag.post_count,
       }
-    }));
+    }))
 
     const newTags = [
       ...tagsWithMetadata,
@@ -128,7 +128,7 @@ export const loadTagMetadata = () => async (dispatch, getState) => {
   }
 
   // all data loaded, nothing to do
-  return;
+  return
 }
 
 export const setTags = (tags) => dispatch => {
@@ -138,7 +138,7 @@ export const setTags = (tags) => dispatch => {
   dispatch(getPics())
 }
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_TAGS:
       return action.tags
@@ -146,3 +146,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

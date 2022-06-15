@@ -35,7 +35,7 @@ export const searchTags =(searchQuery) => async dispatch => {
 
 
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_SEARCH_TAGS:
       return action.tags
@@ -45,3 +45,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

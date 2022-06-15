@@ -82,8 +82,8 @@ export function Modal(props) {
   }
 
   const TagList = ({ title, list }) => {
-    if(!list || list.length === 0) {
-      return null;
+    if (!list || list.length === 0) {
+      return null
     }
     return <div className="tag-list">
       <div className="tag-list-title">
@@ -189,7 +189,7 @@ export function Modal(props) {
               title: 'Meta Tags',
               list: metaTags,
             },
-          ]}/>
+          ]} />
         </div>
       </OutsideNotifier>
     </div >
@@ -218,8 +218,8 @@ const mapDispatch = dispatch => ({
     dispatch(changeTags(tags))
     // this will call setTags for us with needed data
     dispatch(loadTagMetadata())
-    dispatch(hideModal());
-    dispatch(setDoneLoadingPic());
+    dispatch(hideModal())
+    dispatch(setDoneLoadingPic())
   },
 })
 

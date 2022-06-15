@@ -13,7 +13,7 @@ export const setDoneLoadingPic = () => ({
   type: SET_DONE_LOADING,
 })
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_MODAL:
     case SET_LOADING:
@@ -25,3 +25,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

@@ -13,7 +13,7 @@ export const setHasNoMorePics = () => ({
 })
 
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESET_PAGE:
     case SET_HAS_MORE_PICS:
@@ -24,3 +24,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

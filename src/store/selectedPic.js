@@ -41,7 +41,7 @@ export const prevPic = () => (dispatch, getState) => {
   dispatch(selectPic(pics[newIdx], newIdx))
 }
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case SELECT_PIC:
       return { ...action.pic, idx: action.idx }
@@ -49,3 +49,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer

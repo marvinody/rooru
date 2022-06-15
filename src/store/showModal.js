@@ -12,7 +12,7 @@ export const hideModal = () => ({
   type: HIDE_MODAL,
 })
 
-export default (state = initialState, action) => {
+const subReducer = (state = initialState, action) => {
   switch (action.type) {
     case HIDE_MODAL:
       return false
@@ -22,3 +22,4 @@ export default (state = initialState, action) => {
       return state
   }
 }
+export default subReducer
