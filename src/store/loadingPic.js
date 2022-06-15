@@ -5,11 +5,11 @@ const SET_DONE_LOADING = 'SET_DONE_LOADING_PIC'
 
 const initialState = false
 
-export const setLoading = () => ({
+export const setLoadingPic = () => ({
   type: SET_LOADING,
 })
 
-export const setDoneLoading = () => ({
+export const setDoneLoadingPic = () => ({
   type: SET_DONE_LOADING,
 })
 

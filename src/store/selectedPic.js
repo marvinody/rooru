@@ -1,11 +1,11 @@
-import { setLoading } from './loadingPic'
+import { setLoadingPic } from './loadingPic'
 import { getPics } from "./pics"
 const SELECT_PIC = 'SELECT_PIC'
 
 const initialState = {}
 
 export const selectPic = (pic, idx) => dispatch => {
-  dispatch(setLoading())
+  dispatch(setLoadingPic())
   dispatch({
     type: SELECT_PIC,
     pic,

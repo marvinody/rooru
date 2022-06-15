@@ -157,7 +157,7 @@
   border: 2px solid black;
   border-radius: 4px;
   height: fit-content;
-  margin-top: 4px;
+  margin: 8px 32px;
 }
 
 .rating-control {

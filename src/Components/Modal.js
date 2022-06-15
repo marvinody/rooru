@@ -10,7 +10,7 @@ import moment from 'moment'
 import "../css/Modal.css"
 import OutsideNotifier from "../OutsideNotifier"
 import { hideModal, nextPic, prevPic, loadTagMetadata, changeTags } from "../store"
-import { setDoneLoading } from "../store/loadingPic"
+import { setDoneLoadingPic } from "../store/loadingPic"
 import Loading from "./Loading"
 import DesktopSideBars from "./NavSideBars"
 const notFoundUrl = "/404.jpg"
@@ -210,7 +210,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   hideModal: () => dispatch(hideModal()),
-  doneLoading: () => dispatch(setDoneLoading()),
+  doneLoading: () => dispatch(setDoneLoadingPic()),
   nextPic: () => dispatch(nextPic()),
   prevPic: () => dispatch(prevPic()),
   setTags: (tags) => {
@@ -219,7 +219,7 @@ const mapDispatch = dispatch => ({
     // this will call setTags for us with needed data
     dispatch(loadTagMetadata())
     dispatch(hideModal());
-    dispatch(setDoneLoading());
+    dispatch(setDoneLoadingPic());
   },
 })
 
