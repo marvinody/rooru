@@ -159,7 +159,9 @@ export function Modal(props) {
               <video
                 className={props.loading ? 'hidden' : ''}
                 src={proxied_url}
-                autoPlay={true}
+                autoPlay={props.videoAutoplay}
+                muted={props.videoMute}
+                controls={props.videoShowControls}
                 loop={true}
                 onLoadedData={e => {
                   props.doneLoading()
@@ -201,6 +203,9 @@ const mapState = state => ({
   hasMorePics: state.hasPics,
   loading: state.loadingPic,
   tags: state.tags,
+  videoAutoplay: state.settings.videoAutoplay,
+  videoMute: state.settings.videoMute,
+  videoShowControls: state.settings.videoShowControls,
 })
 
 const mapDispatch = dispatch => ({

@@ -32,7 +32,7 @@
   flex-direction: column; /* mobile */
 }
 
-@media (min-width: 767px) {
+@media (min-width: 1067px) {
   .search-bar {
     flex-direction: row;
   }
@@ -174,4 +174,11 @@
 
 .rating-control.disabled {
   filter: grayscale(100%)
+}
+
+.settings {
+  cursor: pointer;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-bottom: 8px;
 }

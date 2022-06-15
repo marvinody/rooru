@@ -12,6 +12,7 @@ import showModal from './showModal'
 import tags from './tags'
 import ratingFilters from './ratingFilters'
 import searchTags from './searchTags'
+import settings from './settings'
 import { middlewares } from './stateSaver'
 
 export * from './hasPics'
@@ -24,6 +25,7 @@ export * from './showModal'
 export * from './tags'
 export * from './ratingFilters'
 export * from './searchTags'
+export * from './settings'
 
 
 const reducer = combineReducers({
@@ -37,6 +39,7 @@ const reducer = combineReducers({
   hasPics,
   searchTags,
   ratingFilters,
+  settings,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(

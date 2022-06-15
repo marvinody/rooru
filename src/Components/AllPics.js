@@ -19,6 +19,9 @@ export function AllPics(props) {
   const classes = [
     'scroller',
   ]
+  if(props.showSettings) {
+    classes.push('hide');
+  }
   return (
     <div className={classes.join(' ')}>
       <InfiniteScroll
@@ -47,6 +50,7 @@ const mapState = state => ({
   page: state.page,
   loadingPics: state.loadingPics,
   hasMore: state.hasPics,
+  showSettings: state.settings.show,
 })
 
 const mapDispatch = dispatch => ({

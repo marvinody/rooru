@@ -1,0 +1,22 @@
+.settings-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #36A0C9;
+  margin: 32px;
+  padding:32px;
+}
+
+.settings-single {
+  display: flex;
+  align-items: center;
+  margin: 8px;
+  justify-content: flex-end;
+}
+
+.settings-single .text {
+  margin: 0 8px;
+}
+
+.hide {
+  display:none;
+}
