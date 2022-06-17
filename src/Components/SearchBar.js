@@ -5,10 +5,10 @@ import Autosuggest from 'react-autosuggest'
 import { connect } from 'react-redux'
 import numeral from 'numeral'
 import _ from 'lodash'
-import { faCog } from "@fortawesome/free-solid-svg-icons"
+import { faCog, faQuestionCircle } from "@fortawesome/free-solid-svg-icons"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { setTags, removeTag, searchTags, toggleTag, toggleGeneral, toggleSensitive, toggleQuestionable, toggleExplicit, toggleSettingsPage } from '../store'
+import { setTags, removeTag, searchTags, toggleTag, toggleGeneral, toggleSensitive, toggleQuestionable, toggleExplicit, toggleSettingsPage, toggleAboutPage } from '../store'
 
 const SearchBar = function SearchBar(props) {
   const [input, setInput] = useState("")
@@ -110,6 +110,9 @@ const SearchBar = function SearchBar(props) {
         <div className='settings'>
           <FontAwesomeIcon icon={faCog} size={'2x'} onClick={props.toggleSettings}/>
         </div>
+        <div className='about'>
+          <FontAwesomeIcon icon={faQuestionCircle} size={'2x'} onClick={props.toggleAbout}/>
+        </div>
       </div>
 
 
@@ -143,6 +146,7 @@ const mapDispatch = dispatch => ({
   toggleQuestionable: () => dispatch(toggleQuestionable()),
   toggleExplicit: () => dispatch(toggleExplicit()),
   toggleSettings: () => dispatch(toggleSettingsPage()),
+  toggleAbout: () => dispatch(toggleAboutPage()),
 })
 
 

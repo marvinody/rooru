@@ -5,6 +5,7 @@ import KeyBindings from './Components/KeyBindings'
 import Modal from './Components/Modal'
 import SearchBar from './Components/SearchBar'
 import Settings from './Components/Settings'
+import AboutPage from './Components/AboutPage'
 
 function App(props) {
 
@@ -16,6 +17,7 @@ function App(props) {
         <SearchBar></SearchBar>
         <AllPics />
         <Settings />
+        <AboutPage />
 
       </div>
       <Modal></Modal>
