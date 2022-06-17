@@ -16,7 +16,6 @@ const initialState = stateSaver({
     videoShowControls: true,
   },
   actionsToSaveOn: [TOGGLE_SETTINGS_BOOL],
-  alwaysUseInitialState: true,
 })
 
 export const toggleSettingsPage = () => {

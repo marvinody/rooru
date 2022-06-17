@@ -19,7 +19,7 @@ export function AllPics(props) {
   const classes = [
     'scroller',
   ]
-  if (props.showSettings) {
+  if (props.showSettings || props.showAbout) {
     classes.push('hide')
   }
   return (
@@ -51,6 +51,7 @@ const mapState = state => ({
   loadingPics: state.loadingPics,
   hasMore: state.hasPics,
   showSettings: state.settings.show,
+  showAbout: state.about.show,
 })
 
 const mapDispatch = dispatch => ({
