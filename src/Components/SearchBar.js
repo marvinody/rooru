@@ -98,11 +98,17 @@ const SearchBar = function SearchBar(props) {
         <div className='rating-controller'>
           {
             ratingOptions.map(({ key, toggle }) => {
+              const classes = [
+                'rating-control',
+                key,
+              ]
               const displayValue = key.toUpperCase()
-              const value = props.ratingFilters[key]
-              const className = 'rating-control ' + (value ? '' : 'disabled')
+              const isEnabled  = props.ratingFilters[key]
+              if(!isEnabled) {
+                classes.push('disabled')
+              }
 
-              return <div key={key} className={className} onClick={toggle}>{displayValue}</div>
+              return <div key={key} className={classes.join(' ')} onClick={toggle}>{displayValue}</div>
             })
           }
         </div>

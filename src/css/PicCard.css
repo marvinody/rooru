@@ -10,6 +10,45 @@
   align-items: center;
 }
 
+.pic-card-img-container {
+  position: relative;
+}
+
+.pic-card .triangle {
+  position: absolute;
+  bottom: 3px;
+
+  right: 0px;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-top-width: 20px;
+  border-top-style: solid;
+  border-top-color: transparent;
+  border-right-width: 20px;
+  border-right-style: solid;
+}
+
+.triangle.rating-general {
+  border-right-color: var(--general-color);
+}
+
+.triangle.rating-sensitive {
+  border-right-color: var(--sensitive-color);
+}
+
+.triangle.rating-questionable {
+  border-right-color: var(--questionable-color);
+}
+
+.triangle.rating-explicit {
+  border-right-color: var(--explicit-color);
+}
+
+
 .pic-card:hover {
+  z-index: 2;
   transform: scale(1.1);
 }

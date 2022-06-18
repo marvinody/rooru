@@ -168,12 +168,26 @@
   height: fit-content;
 }
 
+.rating-control.general {
+  text-decoration: underline var(--general-color);
+}
+.rating-control.sensitive {
+  text-decoration: underline var(--sensitive-color);
+}
+.rating-control.questionable {
+  text-decoration: underline var(--questionable-color);
+}
+.rating-control.explicit {
+  text-decoration: underline var(--explicit-color);
+}
+
 .rating-control:not(:last-child) {
   border-right: 2px solid black;
 }
 
 .rating-control.disabled {
-  filter: grayscale(100%)
+  background-color: #bebebe;
+  color:rgb(67, 67, 67)
 }
 
 .settings, .about {

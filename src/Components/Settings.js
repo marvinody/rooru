@@ -27,6 +27,10 @@ const Settings = function Settings(props) {
       key: 'videoShowControls',
       text: 'Show Video Controls',
     },
+    {
+      key: 'cardShowTriangle',
+      text: 'Show Triangle on Thumbnails',
+    },
   ]
   return (
     <div className={classes.join(' ')}>

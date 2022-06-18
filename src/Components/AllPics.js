@@ -22,20 +22,29 @@ export function AllPics(props) {
   if (props.showSettings || props.showAbout) {
     classes.push('hide')
   }
+
+  const showTriangle = props.cardShowTriangle && props.totalFilters !== 1
+
   return (
     <div className={classes.join(' ')}>
       <InfiniteScroll
         pageStart={0}
         loadMore={props.getNextPage}
         hasMore={props.hasMore}
-        loader={<Loading key='loading'></Loading>}
+        loader={<Loading key='loading' className=''></Loading>}
         initialLoad={true}
       >
 
 
         <div className="pics" key='pics'>
           {props.pics.map((pic, idx) => (
-            <PicCard {...pic} key={pic.id} showModal={props.showModal} setPicToCard={() => props.selectPic(pic, idx)}></PicCard>
+            <PicCard 
+              {...pic} 
+              key={pic.id} 
+              showModal={props.showModal} 
+              setPicToCard={() => props.selectPic(pic, idx)} 
+              showTriangle={showTriangle}
+            />
           ))}
         </div>
 
@@ -52,6 +61,8 @@ const mapState = state => ({
   hasMore: state.hasPics,
   showSettings: state.settings.show,
   showAbout: state.about.show,
+  cardShowTriangle: state.settings.cardShowTriangle,
+  totalFilters: state.ratingFilters.general + state.ratingFilters.sensitive + state.ratingFilters.questionable  + state.ratingFilters.explicit,
 })
 
 const mapDispatch = dispatch => ({

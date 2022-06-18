@@ -25,3 +25,10 @@ body {
 @media (min-width: 320px) and (max-width: 480px) {
 
 }
+
+:root {
+  --general-color: rgb(0, 0, 255);
+  --sensitive-color: rgb(0, 255, 72);
+  --questionable-color: rgb(242, 255, 0);
+  --explicit-color: rgb(255, 0, 0);
+}
