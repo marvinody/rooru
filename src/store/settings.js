@@ -14,6 +14,7 @@ const initialState = stateSaver({
     videoAutoplay: true,
     videoMute: false,
     videoShowControls: true,
+    cardShowTriangle: true,
   },
   actionsToSaveOn: [TOGGLE_SETTINGS_BOOL],
 })
