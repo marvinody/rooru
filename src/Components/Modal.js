@@ -8,7 +8,8 @@ import React from "react"
 import { connect } from "react-redux"
 import moment from 'moment'
 import "../css/Modal.css"
-import OutsideNotifier from "../OutsideNotifier"
+import OutsideNotifier from "../util/OutsideNotifier"
+import UseSwipe from "../util/UseSwipe"
 import { hideModal, nextPic, prevPic, loadTagMetadata, changeTags } from "../store"
 import { setDoneLoadingPic } from "../store/loadingPic"
 import Loading from "./Loading"
@@ -102,6 +103,12 @@ export function Modal(props) {
   }
 
   let titleAffix = `${idx + 1} / ${props.hasMorePics ? "?" : props.numPicsLoaded}`
+
+  UseSwipe({
+    left: props.prevPic,
+    right: props.nextPic,
+    up: props.hideModal,
+  })
 
   return (
     <div className={modalClasses.join(' ')}>
