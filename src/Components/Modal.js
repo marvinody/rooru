@@ -1,6 +1,4 @@
 import {
-  faChevronLeft,
-  faChevronRight,
   faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -8,7 +6,8 @@ import React from "react"
 import { connect } from "react-redux"
 import moment from 'moment'
 import "../css/Modal.css"
-import OutsideNotifier from "../OutsideNotifier"
+import OutsideNotifier from "../util/OutsideNotifier"
+import UseSwipe from "../util/UseSwipe"
 import { hideModal, nextPic, prevPic, loadTagMetadata, changeTags } from "../store"
 import { setDoneLoadingPic } from "../store/loadingPic"
 import Loading from "./Loading"
@@ -39,8 +38,6 @@ export function Modal(props) {
     tag_string_copyright: seriesTags,
     tag_string_artist: artist,
     preview_file_url,
-    image_height,
-    image_width,
     rating,
     created_at,
   } = props.pic
@@ -103,6 +100,12 @@ export function Modal(props) {
 
   let titleAffix = `${idx + 1} / ${props.hasMorePics ? "?" : props.numPicsLoaded}`
 
+  UseSwipe({
+    left: props.prevPic,
+    right: props.nextPic,
+    up: props.hideModal,
+  })
+
   return (
     <div className={modalClasses.join(' ')}>
       <OutsideNotifier onOutsideClick={props.hideModal}>
@@ -123,19 +126,14 @@ export function Modal(props) {
             </span>
           </div>
           <div className={imgContainerClasses.join(' ')}>
-            <div className="left sidebar mobile" onClick={props.prevPic}>
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </div>
-
             {props.loading && <Loading
               size={256}
               className='loading-on-top'
               highContrast={true}
             />}
             {props.loading && <img
-              className={!props.loading ? 'hidden' : 'preview'} width={image_width}
+              className={!props.loading ? 'hidden' : 'preview'} 
               alt={tag_string}
-              height={image_height}
               src={preview_file_url}
             />}
 
@@ -168,14 +166,15 @@ export function Modal(props) {
                 }}
               ></video>
             )}
-            <div className="right sidebar mobile" onClick={props.nextPic}>
-              <FontAwesomeIcon icon={faChevronRight} />
-            </div>
           </div>
           <AllTags tags={[
             {
               title: 'Character(s)',
               list: (character ? character : "original_character"),
+            },
+            {
+              title: 'Artist(s)',
+              list: (artist ? artist : "Artist_Unknown"),
             },
             {
               title: 'General Tags',
