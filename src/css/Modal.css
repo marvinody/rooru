@@ -46,13 +46,14 @@
 .img-resize img,
 .img-resize video {
   object-fit: scale-down;
-  max-width: 85vw;
+  width: 85vw;
   max-height: 85vh;
 }
 
 .controls {
   display: flex;
   justify-content: center;
+  margin-bottom: 2vh;
 }
 
 div.title {
@@ -155,21 +156,22 @@ div.title {
 }
 
 .tag-list-coll {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 24px;
-  align-self:center;
+  align-self: center;
 }
 
 .tag-list-coll p {
   /* background-color: #9BC0CF; */
   background-color: #F0BCE1;
   color: black;
-  padding:4px;
+  padding: 4px;
   border: 1px solid black;
   border-radius: 4px;
-  margin:4px;
+  margin: 4px;
   cursor: pointer;
   text-decoration: underline;
+  text-align: center;
 }
