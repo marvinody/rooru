@@ -1,3 +1,4 @@
+import _ from "lodash"
 
 export const middlewares = []
 
@@ -8,7 +9,11 @@ const stateSaver = ({
   actionsToSaveOn,
   serialize = JSON.stringify,
   deserialize = JSON.parse,
-  alwaysUseInitialState = false, // used for debugging when adding lots of new sub states
+  // used for debugging when adding lots of new sub states
+  alwaysUseInitialState = false, 
+ // used for saved objects to see if initialState should overwrite missing props
+ // useful for when adding new properties to existing object so they get saved as initial state's value
+  mergeWithInitialState = false,
 }) => {
   const reduxMiddleware = ({ getState }) => next => action => {
     const result = next(action)
@@ -26,6 +31,10 @@ const stateSaver = ({
   const previouslySavedValue = deserialize(localStorage.getItem(key))
   if (alwaysUseInitialState || previouslySavedValue === null) {
     return initialState
+  }
+
+  if(mergeWithInitialState) {
+    return _.assign(_.cloneDeep(initialState), previouslySavedValue)
   }
   return previouslySavedValue
 }

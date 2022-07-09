@@ -1,4 +1,4 @@
-import { tagSearchWildcard } from '../util/api/danbooru'
+import { tagSearchWildcard, tagSearchExact } from '../util/api/danbooru'
 
 
 const SET_SEARCH_TAGS = 'SET_SEARCH_TAGS'
@@ -17,13 +17,20 @@ export const resetSearchTags = () => ({
 
 
 
-export const searchTags =(searchQuery) => async dispatch => {
+export const searchTags = (searchQuery) => async (dispatch, getState) => {
   try {
     if (searchQuery.length === 0) {
       return
     }
 
-    const { data: tags } = await tagSearchWildcard({ searchQuery })
+    const { settings } = getState()
+
+    let search = tagSearchWildcard
+    if (settings.exactTextMatch) {
+      search = tagSearchExact
+    }
+
+    const { data: tags } = await search({ searchQuery })
 
     dispatch(setSearchTags(tags))
   } catch (err) {

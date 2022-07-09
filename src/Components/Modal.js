@@ -68,6 +68,10 @@ export function Modal(props) {
     RATING_TO_CLASS[rating],
   ]
 
+  if(!props.showFullHeight) {
+    imgContainerClasses.push('constrain-height')
+  }
+
   const onTagClick = (tagStr) => {
     const tag = {
       value: tagStr,
@@ -103,7 +107,6 @@ export function Modal(props) {
   UseSwipe({
     left: props.prevPic,
     right: props.nextPic,
-    up: props.hideModal,
   })
 
   return (
@@ -150,7 +153,7 @@ export function Modal(props) {
                 }}
                 // this may or may not work for everything
                 // definitely need to revisit this
-                onLoad={e => props.doneLoading()}
+                onLoad={props.doneLoading}
               />
             )}
             {!is_image && (
@@ -161,9 +164,7 @@ export function Modal(props) {
                 muted={props.videoMute}
                 controls={props.videoShowControls}
                 loop={true}
-                onLoadedData={e => {
-                  props.doneLoading()
-                }}
+                onLoadedData={props.doneLoading}
               ></video>
             )}
           </div>
@@ -205,6 +206,7 @@ const mapState = state => ({
   videoAutoplay: state.settings.videoAutoplay,
   videoMute: state.settings.videoMute,
   videoShowControls: state.settings.videoShowControls,
+  showFullHeight: state.settings.showFullHeight,
 })
 
 const mapDispatch = dispatch => ({

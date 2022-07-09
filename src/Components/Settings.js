@@ -21,11 +21,19 @@ const Settings = function Settings(props) {
     },
     {
       key: 'videoMute',
-      text: 'Muted Videos',
+      text: 'Mute Videos',
     },
     {
       key: 'videoShowControls',
       text: 'Show Video Controls',
+    },
+    {
+      key: 'showFullHeight',
+      text: 'Show Full Height Images',
+    },
+    {
+      key: 'exactTextMatch',
+      text: 'Use Exact Text Match (Tag Search)',
     },
     {
       key: 'cardShowTriangle',
