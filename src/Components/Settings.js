@@ -35,6 +35,10 @@ const Settings = function Settings(props) {
       key: 'exactTextMatch',
       text: 'Use Exact Text Match (Tag Search)',
     },
+    {
+      key: 'cardShowTriangle',
+      text: 'Show Triangle on Thumbnails',
+    },
   ]
   return (
     <div className={classes.join(' ')}>

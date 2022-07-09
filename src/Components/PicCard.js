@@ -2,7 +2,8 @@ import React from 'react'
 import '../css/PicCard.css'
 
 const RATING_TO_CLASS = {
-  's': 'rating-safe',
+  'g': 'rating-general',
+  's': 'rating-sensitive',
   'q': 'rating-questionable',
   'e': 'rating-explicit',
 }
@@ -18,7 +19,10 @@ const PicCard = (props) => {
   ]
   return (
     <div className={classes.join(' ')} onClick={onClick}>
-      <img src={props.preview_file_url} alt={props.tag_string_character} title={props.tag_string_character}></img>
+      <div className='pic-card-img-container'>
+        <img src={props.preview_file_url} alt={props.tag_string_character} title={props.tag_string_character}></img>
+        {props.showTriangle && <div className={`triangle ${RATING_TO_CLASS[props.rating]}`}></div>}
+      </div>
     </div>
   )
 }
