@@ -1,5 +1,7 @@
 import { setLoadingPic } from './loadingPic'
 import { getPics } from "./pics"
+import { RESET_PAGE } from './page'
+
 const SELECT_PIC = 'SELECT_PIC'
 
 const initialState = {}
@@ -43,6 +45,8 @@ export const prevPic = () => (dispatch, getState) => {
 
 const subReducer = (state = initialState, action) => {
   switch (action.type) {
+    case RESET_PAGE:
+      return initialState
     case SELECT_PIC:
       return { ...action.pic, idx: action.idx }
     default:

@@ -52,3 +52,16 @@
   z-index: 2;
   transform: scale(1.1);
 }
+
+.last-viewed-image.rating-general img {
+  box-shadow: 0 0 20px 20px var(--general-color);
+}
+.last-viewed-image.rating-sensitive img {
+  box-shadow: 0 0 20px 20px var(--sensitive-color);
+}
+.last-viewed-image.rating-questionable img {
+  box-shadow: 0 0 20px 20px var(--questionable-color);
+}
+.last-viewed-image.rating-explicit img {
+  box-shadow: 0 0 20px 20px var(--explicit-color);
+}
