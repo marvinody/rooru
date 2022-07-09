@@ -45,8 +45,12 @@
 
 .img-resize img,
 .img-resize video {
+  width: 85vw; 
+}
+
+.img-resize.constrain-height img,
+.img-resize.constrain-height video {
   object-fit: scale-down;
-  width: 85vw;
   max-height: 85vh;
 }
 
@@ -96,7 +100,7 @@ div.title {
   display: none;
 }
 
-.modal .preview {
+.modal img.preview {
   object-fit: contain;
 }
 

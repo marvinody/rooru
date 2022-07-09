@@ -14,6 +14,8 @@ const initialState = stateSaver({
     videoAutoplay: true,
     videoMute: false,
     videoShowControls: true,
+    showFullHeight: false,
+    exactTextMatch: false,
   },
   actionsToSaveOn: [TOGGLE_SETTINGS_BOOL],
 })
