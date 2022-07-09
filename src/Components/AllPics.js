@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, createRef } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { connect } from 'react-redux'
 import '../css/AllPics.css'
@@ -9,7 +9,7 @@ import Loading from './Loading'
 import PicCard from './PicCard'
 
 export function AllPics(props) {
-  const { getNextPage, loadTagMetadata } = props
+  const { getNextPage, loadTagMetadata, selectedPicIdx } = props
   useEffect(() => {
     getNextPage()
   }, [getNextPage])
@@ -22,6 +22,19 @@ export function AllPics(props) {
   if (props.showSettings || props.showAbout) {
     classes.push('hide')
   }
+
+  // logic for scrolling down when user hits next gets a little unwieldly here
+  const cardRefs = useRef([])
+  // these get attached in the loop below
+  cardRefs.current = props.pics.map((_, idx) => cardRefs.current[idx] ?? createRef())
+  // and we only care to trigger it when the idx Prop gets changed
+  useEffect(() => {
+    cardRefs.current?.[selectedPicIdx]?.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    })
+  }, [selectedPicIdx])
 
   const showTriangle = props.cardShowTriangle && props.totalFilters !== 1
 
@@ -38,12 +51,14 @@ export function AllPics(props) {
 
         <div className="pics" key='pics'>
           {props.pics.map((pic, idx) => (
-            <PicCard 
-              {...pic} 
-              key={pic.id} 
-              showModal={props.showModal} 
-              setPicToCard={() => props.selectPic(pic, idx)} 
+            <PicCard
+              {...pic}
+              key={pic.id}
+              showModal={props.showModal}
+              setPicToCard={() => props.selectPic(pic, idx)}
+              wasLastSelected={idx === selectedPicIdx}
               showTriangle={showTriangle}
+              ref={cardRefs.current[idx]}
             />
           ))}
         </div>
@@ -62,7 +77,8 @@ const mapState = state => ({
   showSettings: state.settings.show,
   showAbout: state.about.show,
   cardShowTriangle: state.settings.cardShowTriangle,
-  totalFilters: state.ratingFilters.general + state.ratingFilters.sensitive + state.ratingFilters.questionable  + state.ratingFilters.explicit,
+  totalFilters: state.ratingFilters.general + state.ratingFilters.sensitive + state.ratingFilters.questionable + state.ratingFilters.explicit,
+  selectedPicIdx: state.selectedPic.idx,
 })
 
 const mapDispatch = dispatch => ({
