@@ -24,7 +24,8 @@ const PicCard = (props, ref) => {
     <div className={classes.join(' ')} onClick={onClick} ref={ref}>
       <div className='pic-card-img-container'>
         <img src={props.preview_file_url} alt={props.tag_string_character} title={props.tag_string_character}></img>
-        {props.showTriangle && <div className={`triangle ${RATING_TO_CLASS[props.rating]}`}></div>}
+        {props.is_deleted && <div className='triangle top left deleted'></div>}
+        {props.showTriangle && <div className={`triangle bottom right ${RATING_TO_CLASS[props.rating]}`}></div>}
       </div>
     </div>
   )
