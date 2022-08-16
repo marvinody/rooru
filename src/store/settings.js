@@ -17,6 +17,7 @@ const initialState = stateSaver({
     showFullHeight: false,
     exactTextMatch: false,
     cardShowTriangle: true,
+    listShowDeleted: false,
   },
   actionsToSaveOn: [TOGGLE_SETTINGS_BOOL],
 })

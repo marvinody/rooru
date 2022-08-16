@@ -15,13 +15,26 @@
 }
 
 .pic-card .triangle {
-  position: absolute;
-  bottom: 3px;
+  position: absolute;  
+}
 
+.pic-card .triangle.top {
+  top: 0px;
+}
+
+.pic-card .triangle.left {
+  left: 0px;
+}
+
+.pic-card .triangle.bottom {
+  bottom: 3px;
+}
+
+.pic-card .triangle.right {
   right: 0px;
 }
 
-.triangle {
+.triangle.bottom.right {
   width: 0;
   height: 0;
   border-top-width: 20px;
@@ -29,6 +42,18 @@
   border-top-color: transparent;
   border-right-width: 20px;
   border-right-style: solid;
+}
+
+.triangle.top.left {
+  border-bottom-width: 20px;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
+  border-left-width: 20px;
+  border-left-style: solid;
+}
+
+.triangle.deleted {
+  border-left-color: black;
 }
 
 .triangle.rating-general {

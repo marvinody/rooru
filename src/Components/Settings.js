@@ -4,7 +4,7 @@ import React, { } from 'react'
 import Switch from 'react-ios-switch'
 import { connect } from 'react-redux'
 
-import { toggleSetting } from '../store'
+import { resetPage, toggleSetting } from '../store'
 
 const Settings = function Settings(props) {
   const classes = [
@@ -39,15 +39,25 @@ const Settings = function Settings(props) {
       key: 'cardShowTriangle',
       text: 'Show Triangle on Thumbnails',
     },
+    {
+      key: 'listShowDeleted',
+      text: 'Show Deleted Images (top left black triangle)',
+      shouldResetPage: true,
+    },
   ]
   return (
     <div className={classes.join(' ')}>
-      {booleanSettings.map(({ key, text }) =>
+      {booleanSettings.map(({ key, text, shouldResetPage }) =>
         <SingleSetting
           key={key}
           text={text}
           checked={props.allSettings[key]}
-          onChange={() => props.toggleSetting(key)}
+          onChange={() => {
+            props.toggleSetting(key)
+            if(shouldResetPage) {
+              props.resetPage()
+            }
+          }}
         />
       )}
 
@@ -73,6 +83,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   toggleSetting: key => dispatch(toggleSetting(key)),
+  resetPage: () => dispatch(resetPage()),
 })
 
 

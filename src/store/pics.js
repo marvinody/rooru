@@ -42,7 +42,7 @@ const initialState = []
 
 const getPicsHelper = async (dispatch, getState) => {
   dispatch(incPage())
-  const { page, tags, ratingFilters } = getState()
+  const { page, tags, ratingFilters, settings: { listShowDeleted } } = getState()
 
   // if (window.location.hostname === 'localhost') {
   //   dispatch({
@@ -76,7 +76,7 @@ const getPicsHelper = async (dispatch, getState) => {
 
   const viewable_pics = data
     .filter(pic => !pic.is_banned) // banned will never show up
-    .filter(pic => !pic.is_deleted)
+    .filter(pic => listShowDeleted || !pic.is_deleted)
     .filter(pic => !pic.is_flagged)
     .filter(pic => !pic.is_pending)
     .filter(pic => pic.file_url) // and this lets us display to user
